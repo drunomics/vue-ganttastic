@@ -1,7 +1,7 @@
 <template>
   <div
     :id="barConfig.id"
-    :class="['g-gantt-bar', barConfig.class || '']"
+    :class="['g-gantt-bar', barConfig.asArrow ? 'g-gantt-bar-is-arrow' : '', barConfig.class || '']"
     :style="{
       ...barConfig.style,
       position: 'absolute',
@@ -23,7 +23,7 @@
         <div>
           {{ barConfig.label || "" }}
         </div>
-        <div v-if="barConfig.html" v-html="barConfig.html"/>
+        <div v-if="barConfig.html" v-html="barConfig.html" />
       </slot>
     </div>
     <template v-if="barConfig.hasHandles">
@@ -124,6 +124,13 @@ onMounted(() => {
   align-items: center;
   background: cadetblue;
   overflow: hidden;
+  margin: 8px 0;
+
+  border-radius: 4px 0 0 4px;
+}
+
+.g-gantt-bar-is-arrow {
+  height: 6px !important;
 }
 
 .g-gantt-bar-label {

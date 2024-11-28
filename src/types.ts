@@ -15,5 +15,6 @@ export type GanttBarObject = {
     dragLimitRight?: number
     style?: CSSProperties
     class?: string
+    asArrow?: boolean
   }
 }

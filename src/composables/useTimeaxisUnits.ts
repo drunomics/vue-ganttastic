@@ -39,8 +39,8 @@ export default function useTimeaxisUnits() {
     hour: "HH",
     date: "DD.MMM",
     day: "DD.MMM",
-    week: "WW",
-    month: "MMMM YYYY",
+    week: "W",
+    month: "MMM",
     year: "YYYY"
   }
 
@@ -90,6 +90,10 @@ export default function useTimeaxisUnits() {
     }
     return { upperUnits, lowerUnits }
   })
+
+  if (timeaxisUnits.value.lowerUnits[0].label === "53") {
+    timeaxisUnits.value.lowerUnits.splice(0, 1)
+  }
 
   return {
     timeaxisUnits

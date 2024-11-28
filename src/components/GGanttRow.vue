@@ -74,9 +74,8 @@ const onDrop = (e: MouseEvent) => {
 }
 
 const isBlank = (str: string) => {
-  return (!str || /^\s*$/.test(str))
+  return !str || /^\s*$/.test(str)
 }
-
 </script>
 
 <style>
@@ -84,13 +83,6 @@ const isBlank = (str: string) => {
   width: 100%;
   transition: background 0.4s;
   position: relative;
-}
-
-.g-gantt-row > .g-gantt-row-bars-container {
-  position: relative;
-  border-top: 1px solid #eaeaea;
-  width: 100%;
-  border-bottom: 1px solid #eaeaea;
 }
 
 .g-gantt-row-label {

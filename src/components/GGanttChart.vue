@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div class="g-gantt-chart-overview"></div>
     <div :class="[{ 'labels-in-column': !!labelColumnTitle }]">
       <g-gantt-label-column
         v-if="labelColumnTitle"
@@ -19,6 +20,29 @@
         :class="['g-gantt-chart', { 'with-column': labelColumnTitle }]"
         :style="{ width, background: colors.background, fontFamily: font }"
       >
+        <g-gantt-grid v-if="grid" :highlighted-units="highlightedUnits" />
+        <g-gantt-current-time v-if="currentTime">
+          <template #current-time-label>
+            <slot name="current-time-label" />
+          </template>
+        </g-gantt-current-time>
+        <div class="g-gantt-chart-quarters">
+          <div class="g-gantt-chart-quarter">Q1</div>
+          <div class="g-gantt-chart-quarter">Q2</div>
+          <div class="g-gantt-chart-quarter">Q3</div>
+          <div class="g-gantt-chart-quarter">Q4</div>
+
+          <!--          <div v-if="showQ1OfNextYear" class="g-gantt-chart-quarter">Q1</div>-->
+        </div>
+        <div
+          :class="[
+            'g-gantt-rows-container',
+            props.verticalGrid ? 'g-gantt-chart-vertical-grid' : ''
+          ]"
+        >
+          <slot />
+          <!-- the g-gantt-row components go here -->
+        </div>
         <g-gantt-timeaxis v-if="!hideTimeaxis">
           <template #upper-timeunit="{ label, value, date }">
             <!-- expose upper-timeunit slot of g-gantt-timeaxis-->
@@ -29,18 +53,9 @@
             <slot name="timeunit" :label="label" :value="value" :date="date" />
           </template>
         </g-gantt-timeaxis>
-        <g-gantt-grid v-if="grid" :highlighted-units="highlightedUnits" />
-        <g-gantt-current-time v-if="currentTime">
-          <template #current-time-label>
-            <slot name="current-time-label" />
-          </template>
-        </g-gantt-current-time>
-        <div class="g-gantt-rows-container">
-          <slot />
-          <!-- the g-gantt-row components go here -->
-        </div>
       </div>
     </div>
+
     <g-gantt-bar-tooltip :model-value="showTooltip || isDragging" :bar="tooltipBar">
       <template #default>
         <slot name="bar-tooltip" :bar="tooltipBar" />
@@ -79,6 +94,7 @@ import {
   EMIT_BAR_EVENT_KEY,
   type ChartRow
 } from "../provider/symbols.js"
+import dayjs from "dayjs"
 
 export interface GGanttChartProps {
   chartStart: string | Date
@@ -100,6 +116,7 @@ export interface GGanttChartProps {
   font?: string
   labelColumnTitle?: string
   labelColumnWidth?: string
+  verticalGrid?: boolean
 }
 
 export type GGanttChartConfig = ToRefs<Required<GGanttChartProps>> & {
@@ -126,6 +143,12 @@ const props = withDefaults(defineProps<GGanttChartProps>(), {
   labelColumnTitle: "",
   labelColumnWidth: "150px"
 })
+
+const d = new Date(props.chartEnd)
+d.setDate(15)
+d.setMonth(10)
+console.log(props.chartEnd, "end")
+const showQ1OfNextYear = ref(dayjs(props.chartEnd).isAfter(d))
 
 const emit = defineEmits<{
   (e: "click-bar", value: { bar: GanttBarObject; e: MouseEvent; datetime?: string | Date }): void
@@ -254,6 +277,21 @@ const emitBarEvent = (
 const ganttChart = ref<HTMLElement | null>(null)
 const chartSize = useElementSize(ganttChart)
 
+const ggantLowerUnit = document.getElementsByClassName("g-timeunit-low")
+const someWidth = ref("")
+
+/*setTimeout(() => {
+  someWidth.value = ggantLowerUnit[0].clientWidth + "%"
+
+  // const root = document.documentElement
+
+  // const style = getComputedStyle(root)
+
+  // style.setProperty("--someWidth", someWidth.value)
+}, 100)*/
+
+console.log(ggantLowerUnit, " width")
+
 provide(CHART_ROWS_KEY, getChartRows)
 provide(CONFIG_KEY, {
   ...toRefs(props),
@@ -272,7 +310,42 @@ provide(EMIT_BAR_EVENT_KEY, emitBarEvent)
   -webkit-touch-callout: none;
   user-select: none;
   font-variant-numeric: tabular-nums;
-  border-radius: 5px;
+}
+
+.g-gantt-chart-overview {
+  width: 50px;
+  height: 100%;
+}
+
+.g-gantt-chart-vertical-grid {
+  background: repeating-linear-gradient(
+    to right,
+    #dfe2e5 0,
+    #dfe2e5 2px,
+    transparent 2px,
+    transparent 30.7px
+  );
+}
+
+.g-gantt-chart-quarters {
+  display: flex;
+
+  width: 100%;
+  height: 64px;
+  background-color: #f0f1f2;
+}
+
+.g-gantt-chart-quarter {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  width: 407.25px;
+  height: 100%;
+
+  padding-bottom: 4px;
+
+  line-height: 24.8px;
 }
 
 .with-column {
@@ -284,6 +357,8 @@ provide(EMIT_BAR_EVENT_KEY, emitBarEvent)
 
 .g-gantt-rows-container {
   position: relative;
+  height: 400px;
+  padding: 16px 0;
 }
 
 .labels-in-column {
