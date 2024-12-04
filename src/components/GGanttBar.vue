@@ -26,6 +26,13 @@
         <div v-if="barConfig.html" v-html="barConfig.html" />
       </slot>
     </div>
+    <div
+      v-if="barConfig.asArrow"
+      class="g-gantt-bar-arrow"
+      :style="{
+        borderLeft: `8px solid #${bar.ganttBarConfig.style?.backgroundColor}`
+      }"
+    />
     <template v-if="barConfig.hasHandles">
       <div class="g-gantt-bar-handle-left" />
       <div class="g-gantt-bar-handle-right" />
@@ -52,6 +59,9 @@ const config = provideConfig()
 const { rowHeight } = config
 
 const { bar } = toRefs(props)
+// eslint-disable-next-line vue/no-setup-props-destructure
+const barColor = props.bar.ganttBarConfig.style?.backgroundColor
+
 const { mapTimeToPosition, mapPositionToTime } = useTimePositionMapping()
 const { initDragOfBar, initDragOfBundle } = useBarDragManagement()
 const { setDragLimitsOfGanttBar } = useBarDragLimit()
@@ -123,7 +133,7 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   background: cadetblue;
-  overflow: hidden;
+  overflow: visible;
   margin: 8px 0;
 
   border-radius: 4px 0 0 4px;
@@ -167,5 +177,20 @@ onMounted(() => {
 
 .g-gantt-bar-label img {
   pointer-events: none;
+}
+
+.g-gantt-bar-arrow {
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid v-bind(barColor);
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  z-index: 10;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
 }
 </style>

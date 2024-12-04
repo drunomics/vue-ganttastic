@@ -1,28 +1,62 @@
 <template>
-  <div
-    class="g-gantt-row"
-    :style="rowStyle"
-    @dragover.prevent="isHovering = true"
-    @dragleave="isHovering = false"
-    @drop="onDrop($event)"
-    @mouseover="isHovering = true"
-    @mouseleave="isHovering = false"
-  >
+  <div>
     <div
-      v-if="!isBlank(label) && !labelColumnTitle"
-      class="g-gantt-row-label"
-      :style="{ background: colors.primary, color: colors.text }"
+      class="g-gantt-row"
+      :style="rowStyle"
+      @dragover.prevent="isHovering = true"
+      @dragleave="isHovering = false"
+      @drop="onDrop($event)"
+      @mouseover="isHovering = true"
+      @mouseleave="isHovering = false"
     >
-      <slot name="label">
-        {{ label }}
-      </slot>
+      <div
+        v-if="!isBlank(label) && !labelColumnTitle"
+        class="g-gantt-row-label"
+        :style="{ background: colors.primary, color: colors.text }"
+      >
+        <slot name="label">
+          {{ label }}
+        </slot>
+      </div>
+      <div ref="barContainer" class="g-gantt-row-bars-container" v-bind="$attrs">
+        <transition-group name="bar-transition sys" tag="div">
+          <g-gantt-bar v-for="bar in bars" :key="bar.ganttBarConfig.id" :bar="bar">
+            <slot name="bar-label" :bar="bar" />
+          </g-gantt-bar>
+        </transition-group>
+      </div>
     </div>
-    <div ref="barContainer" class="g-gantt-row-bars-container" v-bind="$attrs">
-      <transition-group name="bar-transition" tag="div">
-        <g-gantt-bar v-for="bar in bars" :key="bar.ganttBarConfig.id" :bar="bar">
-          <slot name="bar-label" :bar="bar" />
-        </g-gantt-bar>
-      </transition-group>
+
+    <div
+      v-if="overlaps"
+      class="g-gantt-row"
+      :style="rowStyle"
+      @dragover.prevent="isHovering = true"
+      @dragleave="isHovering = false"
+      @drop="onDrop($event)"
+      @mouseover="isHovering = true"
+      @mouseleave="isHovering = false"
+    >
+      <div
+        v-if="!isBlank(label) && !labelColumnTitle"
+        class="g-gantt-row-label"
+        :style="{ background: colors.primary, color: colors.text }"
+      >
+        <slot name="label">
+          {{ label }}
+        </slot>
+      </div>
+      <div ref="barContainer" class="g-gantt-row-bars-container" v-bind="$attrs">
+        <transition-group name="bar-transition OVERLAP___" tag="div">
+          <g-gantt-bar
+            v-for="overlapBar in overlaps"
+            :key="overlapBar.ganttBarConfig.id"
+            :bar="overlapBar"
+          >
+            <slot name="bar-label" :bar="overlapBar" />
+          </g-gantt-bar>
+        </transition-group>
+      </div>
     </div>
   </div>
 </template>
@@ -39,13 +73,13 @@ import { BAR_CONTAINER_KEY } from "../provider/symbols"
 const props = defineProps<{
   label: string
   bars: GanttBarObject[]
+  overlaps?: GanttBarObject[]
   highlightOnHover?: boolean
 }>()
 
 const emit = defineEmits<{
   (e: "drop", value: { e: MouseEvent; datetime: string | Date }): void
 }>()
-
 const { rowHeight, colors, labelColumnTitle } = provideConfig()
 const { highlightOnHover } = toRefs(props)
 const isHovering = ref(false)

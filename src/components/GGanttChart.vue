@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="g-gantt-chart-container">
     <div class="g-gantt-chart-overview"></div>
     <div :class="[{ 'labels-in-column': !!labelColumnTitle }]">
       <g-gantt-label-column
@@ -32,7 +32,7 @@
           <div class="g-gantt-chart-quarter">Q3</div>
           <div class="g-gantt-chart-quarter">Q4</div>
 
-          <!--          <div v-if="showQ1OfNextYear" class="g-gantt-chart-quarter">Q1</div>-->
+          <div v-if="showQ1OfNextYear" class="g-gantt-chart-quarter">Q1</div>
         </div>
         <div
           :class="[
@@ -42,6 +42,7 @@
         >
           <slot />
           <!-- the g-gantt-row components go here -->
+          <g-gantt-grid :highlighted-units="highlightedUnits" />
         </div>
         <g-gantt-timeaxis v-if="!hideTimeaxis">
           <template #upper-timeunit="{ label, value, date }">
@@ -95,6 +96,7 @@ import {
   type ChartRow
 } from "../provider/symbols.js"
 import dayjs from "dayjs"
+import isBetween from "dayjs/plugin/isBetween.js"
 
 export interface GGanttChartProps {
   chartStart: string | Date
@@ -144,11 +146,20 @@ const props = withDefaults(defineProps<GGanttChartProps>(), {
   labelColumnWidth: "150px"
 })
 
-const d = new Date(props.chartEnd)
-d.setDate(15)
-d.setMonth(10)
-console.log(props.chartEnd, "end")
-const showQ1OfNextYear = ref(dayjs(props.chartEnd).isAfter(d))
+dayjs.extend(isBetween)
+
+const showQ1OfNextYearStartDate = new Date()
+const showQ1OfNextYearEndDate = new Date()
+
+showQ1OfNextYearStartDate.setDate(15)
+showQ1OfNextYearStartDate.setMonth(10)
+
+showQ1OfNextYearEndDate.setDate(31)
+showQ1OfNextYearEndDate.setMonth(11)
+
+const showQ1OfNextYear = ref(
+  dayjs(new Date()).isBetween(showQ1OfNextYearStartDate, showQ1OfNextYearEndDate)
+)
 
 const emit = defineEmits<{
   (e: "click-bar", value: { bar: GanttBarObject; e: MouseEvent; datetime?: string | Date }): void
@@ -278,19 +289,6 @@ const ganttChart = ref<HTMLElement | null>(null)
 const chartSize = useElementSize(ganttChart)
 
 const ggantLowerUnit = document.getElementsByClassName("g-timeunit-low")
-const someWidth = ref("")
-
-/*setTimeout(() => {
-  someWidth.value = ggantLowerUnit[0].clientWidth + "%"
-
-  // const root = document.documentElement
-
-  // const style = getComputedStyle(root)
-
-  // style.setProperty("--someWidth", someWidth.value)
-}, 100)*/
-
-console.log(ggantLowerUnit, " width")
 
 provide(CHART_ROWS_KEY, getChartRows)
 provide(CONFIG_KEY, {
@@ -317,14 +315,17 @@ provide(EMIT_BAR_EVENT_KEY, emitBarEvent)
   height: 100%;
 }
 
-.g-gantt-chart-vertical-grid {
-  background: repeating-linear-gradient(
-    to right,
-    #dfe2e5 0,
-    #dfe2e5 2px,
-    transparent 2px,
-    transparent 30.7px
-  );
+.g-gantt-chart-container {
+  background: #f0f1f2;
+  padding: 0 24px 0 16px;
+  border-top: 4px solid #91979C;
+  border-bottom: 4px solid #91979C;
+}
+
+.g-gantt-chart-vertical-grid__line {
+  height: 100%;
+  width: 2px;
+  background-color: black;
 }
 
 .g-gantt-chart-quarters {
@@ -340,7 +341,6 @@ provide(EMIT_BAR_EVENT_KEY, emitBarEvent)
   align-items: flex-end;
   justify-content: center;
 
-  width: 407.25px;
   height: 100%;
 
   padding-bottom: 4px;

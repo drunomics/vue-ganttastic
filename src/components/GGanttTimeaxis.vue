@@ -23,7 +23,7 @@
       </div>
     </div>
 
-    <div class="g-timeunits-container">
+    <div class="g-timeunits-container g-timeunits-upper">
       <div
         v-for="({ label, value, date, width }, index) in timeaxisUnits.upperUnits"
         :key="label"
@@ -46,7 +46,6 @@ import useTimeaxisUnits from "../composables/useTimeaxisUnits.js"
 
 const { precision, colors } = provideConfig()
 const { timeaxisUnits } = useTimeaxisUnits()
-console.log(timeaxisUnits, " units")
 </script>
 
 <style>
@@ -54,7 +53,6 @@ console.log(timeaxisUnits, " units")
   position: sticky;
   top: 0;
   width: 100%;
-  height: 80px;
   background: white;
   z-index: 4;
   display: flex;
@@ -69,6 +67,12 @@ console.log(timeaxisUnits, " units")
 
 .g-timeunits-low {
   height: 24px;
+  display: flex;
+  gap: 2px;
+}
+
+.g-timeunits-upper {
+  height: 41px;
 }
 
 .g-timeunit-low:nth-child(odd) {

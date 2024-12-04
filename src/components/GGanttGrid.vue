@@ -1,7 +1,7 @@
 <template>
   <div class="g-grid-container">
     <div
-      v-for="{ label, value, width } in timeaxisUnits.lowerUnits"
+      v-for="({ label, value, width }) in timeaxisUnits.lowerUnits"
       :key="label"
       class="g-grid-line"
       :style="{
@@ -38,6 +38,12 @@ const { timeaxisUnits } = useTimeaxisUnits()
 .g-grid-line {
   width: 1px;
   height: 100%;
-  border-left: 1px solid #eaeaea;
+  border-left: 2px solid #f0f1f2;
+}
+
+.g-grid-line:nth-child(13n) {
+  width: 1px;
+  height: 100%;
+  border-left: 2px solid #a8adb3;
 }
 </style>
