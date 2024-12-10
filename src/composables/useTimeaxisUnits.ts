@@ -95,6 +95,12 @@ export default function useTimeaxisUnits() {
     timeaxisUnits.value.lowerUnits.splice(0, 1)
   }
 
+  if (timeaxisUnits.value.lowerUnits[timeaxisUnits.value.lowerUnits.length - 1].label === "14") {
+    timeaxisUnits.value.lowerUnits.splice(timeaxisUnits.value.lowerUnits.length - 1, 1)
+  }
+
+
+
   return {
     timeaxisUnits
   }

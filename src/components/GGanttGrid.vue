@@ -1,11 +1,12 @@
 <template>
   <div class="g-grid-container">
     <div
-      v-for="({ label, value, width }) in timeaxisUnits.lowerUnits"
+      v-for="({ label, value, width }, index) in timeaxisUnits.lowerUnits"
       :key="label"
       class="g-grid-line"
       :style="{
         width,
+        borderRight: getBorderRight(label, index),
         background: highlightedUnits?.includes(Number(value)) ? colors.hoverHighlight : undefined
       }"
     />
@@ -22,6 +23,14 @@ defineProps<{
 
 const { colors } = provideConfig()
 const { timeaxisUnits } = useTimeaxisUnits()
+
+const getBorderRight = (label: string, index: number) => {
+  if (index === timeaxisUnits.value.lowerUnits.length - 1) {
+    return "unset"
+  }
+
+  return label && Number(label) % 13 === 0 ? "2px solid #a8adb3" : "2px solid #f0f1f2"
+}
 </script>
 
 <style>
@@ -38,12 +47,6 @@ const { timeaxisUnits } = useTimeaxisUnits()
 .g-grid-line {
   width: 1px;
   height: 100%;
-  border-left: 2px solid #f0f1f2;
 }
 
-.g-grid-line:nth-child(13n) {
-  width: 1px;
-  height: 100%;
-  border-left: 2px solid #a8adb3;
-}
 </style>

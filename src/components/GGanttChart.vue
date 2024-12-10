@@ -330,6 +330,7 @@ provide(EMIT_BAR_EVENT_KEY, emitBarEvent)
 
 .g-gantt-chart-quarters {
   display: flex;
+  justify-content: space-around;
 
   width: 100%;
   height: 64px;
