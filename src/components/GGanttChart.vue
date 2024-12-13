@@ -1,6 +1,13 @@
 <template>
-  <div class="g-gantt-chart-container">
-    <div class="g-gantt-chart-overview"></div>
+  <div
+    class="g-gantt-chart-container"
+    :class="[
+      showQ1OfNextYear
+        ? 'g-gantt-chart-container--5-quarters-width'
+        : 'g-gantt-chart-container--4-quarters-width'
+    ]"
+  >
+    <div class="g-gantt-chart-overview" />
     <div :class="[{ 'labels-in-column': !!labelColumnTitle }]">
       <g-gantt-label-column
         v-if="labelColumnTitle"
@@ -360,6 +367,16 @@ provide(EMIT_BAR_EVENT_KEY, emitBarEvent)
   position: relative;
   height: 400px;
   padding: 16px 0;
+}
+
+.g-gantt-chart-container--5-quarters-width {
+  /* min-width of week * (1 year weeks + 1st quarter weeks) */
+  min-width: calc(21px * (52 + 13));
+}
+
+.g-gantt-chart-container--4-quarters-width {
+  /* min-width of week * 1 year weeks */
+  min-width: calc(21px * 52);
 }
 
 .labels-in-column {

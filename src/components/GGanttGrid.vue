@@ -7,7 +7,8 @@
       :style="{
         width,
         borderRight: getBorderRight(label, index),
-        background: highlightedUnits?.includes(Number(value)) ? colors.hoverHighlight : undefined
+        background: highlightedUnits?.includes(Number(value)) ? colors.hoverHighlight : undefined,
+        backgroundColor: getBackgroundColor(label)
       }"
     />
   </div>
@@ -23,6 +24,17 @@ defineProps<{
 
 const { colors } = provideConfig()
 const { timeaxisUnits } = useTimeaxisUnits()
+
+const getBackgroundColor = (label: string) => {
+  const q2 = +label >= 14 && +label <= 26
+  const q4 = +label >= 40 && +label <= 52
+
+  if (q2 || q4) {
+    return "#f7f8f9"
+  } else {
+    return "#ffffff"
+  }
+}
 
 const getBorderRight = (label: string, index: number) => {
   if (index === timeaxisUnits.value.lowerUnits.length - 1) {
@@ -48,5 +60,4 @@ const getBorderRight = (label: string, index: number) => {
   width: 1px;
   height: 100%;
 }
-
 </style>

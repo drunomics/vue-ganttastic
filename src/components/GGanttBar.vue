@@ -7,7 +7,7 @@
       position: 'absolute',
       top: `${rowHeight * 0.1}px`,
       left: `${xStart}px`,
-      width: `${xEnd - xStart}px`,
+      width: `${getBarWidth}px`,
       height: `${rowHeight * 0.8}px`,
       zIndex: isDragging ? 3 : 2
     }"
@@ -114,6 +114,24 @@ const { barStart, barEnd, width, chartStart, chartEnd, chartSize } = config
 
 const xStart = ref(0)
 const xEnd = ref(0)
+const arrowWidth = 8
+
+const getBarWidth = computed(() => {
+  const beginDateTs = new Date(bar.value.myBeginDate).getTime();
+  const endDateTs = new Date(bar.value.myEndDate).getTime();
+
+  // Calculate the absolute difference in milliseconds
+  const differenceInMilliseconds = Math.abs(beginDateTs - endDateTs);
+
+  // Convert milliseconds to days
+  const differenceInDays = differenceInMilliseconds / (1000 * 60 * 60 * 24);
+
+  if (differenceInDays <= 2) {
+    return 0
+  }
+
+  return xEnd.value - xStart.value - arrowWidth
+})
 
 onMounted(() => {
   watch(

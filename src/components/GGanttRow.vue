@@ -117,6 +117,7 @@ const isBlank = (str: string) => {
   width: 100%;
   transition: background 0.4s;
   position: relative;
+  height: 24px !important;
 }
 
 .g-gantt-row-label {
