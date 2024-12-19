@@ -26,6 +26,7 @@
   "main": "./lib/vue-ganttastic.umd.cjs",
   "types": "./lib_types/vue-ganttastic.d.ts",
   "files": [
+    "lib",
     "lib_types",
     "lib/vue-ganttastic.js",
     "lib/vue-ganttastic.umd.cjs"
