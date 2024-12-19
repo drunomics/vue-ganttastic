@@ -15,6 +15,7 @@
     "docs:dev": "vitepress dev docs",
     "docs:preview": "vitepress preview docs"
   },
+  "module": "./lib/vue-ganttastic.umd.cjs",
   "type": "module",
   "exports": {
     ".": {
@@ -26,10 +27,8 @@
   "main": "./lib/vue-ganttastic.umd.cjs",
   "types": "./lib_types/vue-ganttastic.d.ts",
   "files": [
-    "lib",
-    "lib_types",
-    "lib/vue-ganttastic.js",
-    "lib/vue-ganttastic.umd.cjs"
+    "./lib_types",
+    "./lib"
   ],
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
@@ -69,7 +68,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/zunnzunn/vue-ganttastic"
+    "url": "https://github.com/Austral1a/vue-ganttastic"
   },
   "dependencies": {
     "@vueuse/core": "^9.1.1"
