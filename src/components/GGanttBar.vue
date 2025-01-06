@@ -75,33 +75,10 @@ function firstMousemoveCallback(e: MouseEvent) {
   isDragging.value = true
 }
 
-const prepareForDrag = () => {
-  setDragLimitsOfGanttBar(bar.value)
-  if (barConfig.value.immobile) {
-    return
-  }
-
-  window.addEventListener("mousemove", firstMousemoveCallback, {
-    once: true
-  }) // on first mousemove event
-  window.addEventListener(
-    "mouseup",
-    () => {
-      // in case user does not move the mouse after mousedown at all
-      window.removeEventListener("mousemove", firstMousemoveCallback)
-      isDragging.value = false
-    },
-    { once: true }
-  )
-}
-
 const barContainerEl = inject(BAR_CONTAINER_KEY)
 
 const onMouseEvent = (e: MouseEvent) => {
   e.preventDefault()
-  if (e.type === "mousedown") {
-    prepareForDrag()
-  }
   const barContainer = barContainerEl?.value?.getBoundingClientRect()
   if (!barContainer) {
     return
