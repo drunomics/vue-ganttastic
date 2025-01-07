@@ -149,26 +149,22 @@ function findOverlappingIntervals(bars: GanttBarObject[]) {
 
 const getBarsToRender = () => {
   const barsList: GanttBarObject[][] = []
+  let overlappingBarsList: GanttBarObject[] = []
 
   const checkOverlaps = (bars: GanttBarObject[]) => {
-    let currentBars = bars
+    overlappingBarsList = findOverlappingIntervals(bars)
 
-    while (currentBars.length > 0) {
-      const overlapping = findOverlappingIntervals(currentBars);
+    barsList.push(overlappingBarsList)
 
-      barsList.push(overlapping)
-
-      // Break if no more overlapping intervals are found
-      if (overlapping.length === 0) break
-
-      currentBars = overlapping
+    if (overlappingBarsList.length > 0) {
+      checkOverlaps(overlappingBarsList)
     }
   }
 
   checkOverlaps(props.bars)
 
+  console.log("TESTS")
   console.log(barsList, " barsList")
-  console.log("TEST")
   return barsList
 }
 
