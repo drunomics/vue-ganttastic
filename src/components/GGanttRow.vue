@@ -1,6 +1,7 @@
 <template>
   <div>
     <div
+      v-for="barsList in barsToRender"
       class="g-gantt-row"
       :style="rowStyle"
       @dragover.prevent="isHovering = true"
@@ -20,14 +21,14 @@
       </div>
       <div ref="barContainer" class="g-gantt-row-bars-container" v-bind="$attrs">
         <transition-group name="bar-transition sys" tag="div">
-          <g-gantt-bar v-for="bar in bars" :key="bar.ganttBarConfig.id" :bar="bar">
+          <g-gantt-bar v-for="bar in barsList" :key="bar.ganttBarConfig.id" :bar="bar">
             <slot name="bar-label" :bar="bar" />
           </g-gantt-bar>
         </transition-group>
       </div>
     </div>
 
-    <div
+<!--    <div
       v-if="overlaps"
       class="g-gantt-row"
       :style="rowStyle"
@@ -57,18 +58,19 @@
           </g-gantt-bar>
         </transition-group>
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref, toRefs, computed, type StyleValue, provide } from "vue"
+import { ref, type Ref, toRefs, computed, type StyleValue, provide, onMounted } from "vue"
 
 import useTimePositionMapping from "../composables/useTimePositionMapping.js"
 import provideConfig from "../provider/provideConfig.js"
 import type { GanttBarObject } from "../types"
 import GGanttBar from "./GGanttBar.vue"
 import { BAR_CONTAINER_KEY } from "../provider/symbols"
+import dayjs from "dayjs"
 
 const props = defineProps<{
   label: string
@@ -76,6 +78,9 @@ const props = defineProps<{
   overlaps?: GanttBarObject[]
   highlightOnHover?: boolean
 }>()
+
+
+  const barsToRender = ref<GanttBarObject[][]>([])
 
 const emit = defineEmits<{
   (e: "drop", value: { e: MouseEvent; datetime: string | Date }): void
@@ -107,6 +112,65 @@ const onDrop = (e: MouseEvent) => {
   emit("drop", { e, datetime })
 }
 
+/*
+
+function isDifferenceLessThanThreeDays (date1: any, date2: any) {
+  // Convert dates to milliseconds
+  const msPerDay = 24 * 60 * 60 * 1000 // Milliseconds in a day
+  const diffInMs = Math.abs(new Date(date1) - new Date(date2)) // Absolute difference
+  const diffInDays = diffInMs / msPerDay // Convert to days
+
+  return diffInDays <= 3 // Check if less than 3 days
+}
+*/
+
+function doIntervalsOverlap (start1: any, end1: any, start2: any, end2: any) {
+  return (start1 <= end2 && start2 <= end1)
+}
+
+function findOverlappingIntervals(bars: GanttBarObject[]) {
+  const overlaps: GanttBarObject[] = []
+
+  bars.forEach((bar) => {
+    bars.forEach((bar1) => {
+      if (bar.myBeginDate === bar1.myBeginDate && bar.myEndDate === bar1.myEndDate) {
+        return
+      }
+
+      if (doIntervalsOverlap(bar.myBeginDate, bar.myEndDate, bar1.myBeginDate, bar1.myEndDate)) {
+        // take to the overlaps the date which is after
+        overlaps.push(dayjs(bar.myEndDate).isAfter(bar1.myEndDate) ? bar : bar1)
+      }
+    })
+  })
+
+  return overlaps
+}
+
+const getBarsToRender = () => {
+  const barsList: GanttBarObject[][] = []
+
+  const checkOverlaps = (bars: GanttBarObject[]) => {
+    const overlapping = findOverlappingIntervals(bars)
+
+    barsList.push(overlapping)
+
+    if (overlapping.length) {
+      checkOverlaps(overlapping)
+    }
+  }
+
+  checkOverlaps(props.bars)
+
+  console.log(barsList, " barsList")
+  return barsList
+}
+
+onMounted(() => {
+  barsToRender.value = getBarsToRender()
+
+  console.log(barsToRender.value, "  barstornder")
+})
 const isBlank = (str: string) => {
   return !str || /^\s*$/.test(str)
 }
@@ -148,3 +212,5 @@ const isBlank = (str: string) => {
   opacity: 0;
 }
 </style>
+<script setup lang="ts">
+</script>
