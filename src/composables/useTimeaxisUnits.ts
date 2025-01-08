@@ -103,8 +103,6 @@ export default function useTimeaxisUnits() {
     timeaxisUnits.value.lowerUnits.splice(timeaxisUnits.value.lowerUnits.length - 1, 1)
   }
 
-
-
   return {
     timeaxisUnits
   }

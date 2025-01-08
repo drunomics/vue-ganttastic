@@ -4,6 +4,7 @@ import { defineConfig } from "vite"
 import vue from "@vitejs/plugin-vue"
 import postcssPresetEnv from "postcss-preset-env"
 import styleInject from "@senojs/rollup-plugin-style-inject"
+import vitePluginEslint from 'vite-plugin-eslint'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,7 +12,8 @@ export default defineConfig({
     vue(),
     styleInject({
       insertAt: "top"
-    })
+    }),
+    vitePluginEslint()
   ],
   css: {
     postcss: {

@@ -2,6 +2,7 @@
   <div>
     <div
       v-for="barsList in barsToRender"
+      :key="barsList[0].ganttBarConfig.id"
       class="g-gantt-row"
       :style="rowStyle"
       @dragover.prevent="isHovering = true"
@@ -71,6 +72,8 @@ provide(BAR_CONTAINER_KEY, barContainer)
 const onDrop = (e: MouseEvent) => {
   const container = barContainer.value?.getBoundingClientRect()
   if (!container) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
     console.error("Vue-Ganttastic: failed to find bar container element for row.")
     return
   }
@@ -79,7 +82,7 @@ const onDrop = (e: MouseEvent) => {
   emit("drop", { e, datetime })
 }
 
-function isDifferenceLessThanThreeDays(date1: any, date2: any) {
+function isDifferenceLessThanThreeDays(date1: string, date2: string) {
   // Convert dates to milliseconds
   const msPerDay = 24 * 60 * 60 * 1000 // Milliseconds in a day
   const diffInMs = Math.abs(new Date(date1).getTime() - new Date(date2).getTime()) // Absolute difference
@@ -88,7 +91,7 @@ function isDifferenceLessThanThreeDays(date1: any, date2: any) {
   return diffInDays <= 3 // Check if less than 3 days
 }
 
-function doIntervalsOverlap(start1: any, end1: any, start2: any, end2: any) {
+function doIntervalsOverlap(start1: Date, end1: Date, start2: Date, end2: Date) {
   return start1 <= end2 && start2 <= end1
 }
 

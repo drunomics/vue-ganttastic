@@ -25,7 +25,7 @@
 
     <div class="g-timeunits-container g-timeunits-upper">
       <div
-        v-for="({ label, value, date, width }, index) in timeaxisUnits.upperUnits"
+        v-for="{ label, value, date, width } in timeaxisUnits.upperUnits"
         :key="label"
         class="g-upper-timeunit"
         :style="{

@@ -77,9 +77,6 @@ export default function useBarDragManagement() {
           )
           break
         default:
-          console.warn(
-            "Vue-Ganttastic: One bar is inside of the other one! This should never occur while push-on-overlap is active!"
-          )
           return
       }
       if (overlapBar && (overlapType === "left" || overlapType === "right")) {

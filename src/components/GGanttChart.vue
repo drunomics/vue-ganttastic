@@ -325,8 +325,8 @@ provide(EMIT_BAR_EVENT_KEY, emitBarEvent)
 .g-gantt-chart-container {
   background: #f0f1f2;
   padding: 0 24px 0 16px;
-  border-top: 4px solid #91979C;
-  border-bottom: 4px solid #91979C;
+  border-top: 4px solid #91979c;
+  border-bottom: 4px solid #91979c;
 }
 
 .g-gantt-chart-vertical-grid__line {
