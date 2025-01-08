@@ -27,38 +27,6 @@
         </transition-group>
       </div>
     </div>
-
-<!--    <div
-      v-if="overlaps"
-      class="g-gantt-row"
-      :style="rowStyle"
-      @dragover.prevent="isHovering = true"
-      @dragleave="isHovering = false"
-      @drop="onDrop($event)"
-      @mouseover="isHovering = true"
-      @mouseleave="isHovering = false"
-    >
-      <div
-        v-if="!isBlank(label) && !labelColumnTitle"
-        class="g-gantt-row-label"
-        :style="{ background: colors.primary, color: colors.text }"
-      >
-        <slot name="label">
-          {{ label }}
-        </slot>
-      </div>
-      <div ref="barContainer" class="g-gantt-row-bars-container" v-bind="$attrs">
-        <transition-group name="bar-transition OVERLAP___" tag="div">
-          <g-gantt-bar
-            v-for="overlapBar in overlaps"
-            :key="overlapBar.ganttBarConfig.id"
-            :bar="overlapBar"
-          >
-            <slot name="bar-label" :bar="overlapBar" />
-          </g-gantt-bar>
-        </transition-group>
-      </div>
-    </div>-->
   </div>
 </template>
 
@@ -79,8 +47,7 @@ const props = defineProps<{
   highlightOnHover?: boolean
 }>()
 
-
-  const barsToRender = ref<GanttBarObject[][]>([])
+const barsToRender = ref<GanttBarObject[][]>([])
 
 const emit = defineEmits<{
   (e: "drop", value: { e: MouseEvent; datetime: string | Date }): void
@@ -112,72 +79,76 @@ const onDrop = (e: MouseEvent) => {
   emit("drop", { e, datetime })
 }
 
-/*
-
-function isDifferenceLessThanThreeDays (date1: any, date2: any) {
+function isDifferenceLessThanThreeDays(date1: any, date2: any) {
   // Convert dates to milliseconds
   const msPerDay = 24 * 60 * 60 * 1000 // Milliseconds in a day
-  const diffInMs = Math.abs(new Date(date1) - new Date(date2)) // Absolute difference
+  const diffInMs = Math.abs(new Date(date1).getTime() - new Date(date2).getTime()) // Absolute difference
   const diffInDays = diffInMs / msPerDay // Convert to days
 
   return diffInDays <= 3 // Check if less than 3 days
 }
-*/
 
-function doIntervalsOverlap (start1: any, end1: any, start2: any, end2: any) {
-  return (start1 <= end2 && start2 <= end1)
+function doIntervalsOverlap(start1: any, end1: any, start2: any, end2: any) {
+  return start1 <= end2 && start2 <= end1
 }
 
 function findOverlappingIntervals(bars: GanttBarObject[]) {
   const overlaps: GanttBarObject[] = []
 
-  bars.forEach((bar) => {
-    bars.forEach((bar1) => {
-      if (bar.myBeginDate === bar1.myBeginDate && bar.myEndDate === bar1.myEndDate) {
-        return
+  for (let i = 0; i < bars.length; i++) {
+    for (let j = i + 1; j < bars.length; j++) {
+      if (
+        doIntervalsOverlap(
+          bars[i].myBeginDate,
+          bars[i].myEndDate,
+          bars[j].myBeginDate,
+          bars[j].myEndDate
+        )
+      ) {
+        overlaps.push(dayjs(bars[i].myEndDate).isAfter(bars[j].myEndDate) ? bars[i] : bars[j])
       }
-
-      if (doIntervalsOverlap(bar.myBeginDate, bar.myEndDate, bar1.myBeginDate, bar1.myEndDate)) {
-        // take to the overlaps the date which is after
-        overlaps.push(dayjs(bar.myEndDate).isAfter(bar1.myEndDate) ? bar : bar1)
-      }
-    })
-  })
+    }
+  }
 
   return overlaps
 }
 
 const getBarsToRender = () => {
-  const barsList: GanttBarObject[][] = []
-  let overlappingBarsList: GanttBarObject[] = []
+  const barsList: GanttBarObject[][] = [] // List of overlapping groups
 
-  const checkOverlaps = (bars: GanttBarObject[]) => {
-    overlappingBarsList = findOverlappingIntervals(bars)
+  const handleBars = (list: GanttBarObject[]) => {
+    if (!list || list.length === 0) {
+      return
+    }
 
-    barsList.push(overlappingBarsList)
+    const overlaps = findOverlappingIntervals(list)
 
-    if (overlappingBarsList.length > 0) {
-      checkOverlaps(overlappingBarsList)
+    if (overlaps.length > 0) {
+      const notOverlappingList = list.filter((bar) => !overlaps.includes(bar))
+      const remainingList = list.filter((bar) => overlaps.includes(bar))
+
+      barsList.push(notOverlappingList)
+
+      handleBars(remainingList)
+    } else {
+      barsList.push(list)
     }
   }
 
-  checkOverlaps(props.bars)
+  handleBars(props.bars)
 
-  console.log("TESTS")
-  console.log(barsList, " barsList")
   return barsList
 }
 
 onMounted(() => {
   barsToRender.value = getBarsToRender()
-
-  console.log(barsToRender.value, "  barstornder")
 })
 const isBlank = (str: string) => {
   return !str || /^\s*$/.test(str)
 }
 </script>
 
+<script setup lang="ts"></script>
 <style>
 .g-gantt-row {
   width: 100%;
@@ -214,5 +185,3 @@ const isBlank = (str: string) => {
   opacity: 0;
 }
 </style>
-<script setup lang="ts">
-</script>
