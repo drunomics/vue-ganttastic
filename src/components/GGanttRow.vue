@@ -3,18 +3,18 @@
     <div
       v-for="barsList in barsToRender"
       :key="barsList[0].ganttBarConfig.id"
-      class="g-gantt-row"
       :style="rowStyle"
-      @dragover.prevent="isHovering = true"
+      class="g-gantt-row"
       @dragleave="isHovering = false"
       @drop="onDrop($event)"
-      @mouseover="isHovering = true"
       @mouseleave="isHovering = false"
+      @mouseover="isHovering = true"
+      @dragover.prevent="isHovering = true"
     >
       <div
         v-if="!isBlank(label) && !labelColumnTitle"
-        class="g-gantt-row-label"
         :style="{ background: colors.primary, color: colors.text }"
+        class="g-gantt-row-label"
       >
         <slot name="label">
           {{ label }}
@@ -23,7 +23,7 @@
       <div ref="barContainer" class="g-gantt-row-bars-container" v-bind="$attrs">
         <transition-group name="bar-transition sys" tag="div">
           <g-gantt-bar v-for="bar in barsList" :key="bar.ganttBarConfig.id" :bar="bar">
-            <slot name="bar-label" :bar="bar" />
+            <slot :bar="bar" name="bar-label" />
           </g-gantt-bar>
         </transition-group>
       </div>
@@ -31,15 +31,15 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref, type Ref, toRefs, computed, type StyleValue, provide, onMounted } from "vue"
+<script lang="ts" setup>
+import { ref, toRefs, computed, type StyleValue, provide, onMounted, useTemplateRef } from "vue"
 
+import dayjs from "dayjs"
 import useTimePositionMapping from "../composables/useTimePositionMapping.js"
 import provideConfig from "../provider/provideConfig.js"
 import type { GanttBarObject } from "../types"
-import GGanttBar from "./GGanttBar.vue"
 import { BAR_CONTAINER_KEY } from "../provider/symbols"
-import dayjs from "dayjs"
+import GGanttBar from "./GGanttBar.vue"
 
 const props = defineProps<{
   label: string
@@ -50,9 +50,7 @@ const props = defineProps<{
 
 const barsToRender = ref<GanttBarObject[][]>([])
 
-const emit = defineEmits<{
-  (e: "drop", value: { e: MouseEvent; datetime: string | Date }): void
-}>()
+const emit = defineEmits<{ (e: "drop", value: { e: MouseEvent; datetime: string | Date }): void }>()
 const { rowHeight, colors, labelColumnTitle } = provideConfig()
 const { highlightOnHover } = toRefs(props)
 const isHovering = ref(false)
@@ -65,30 +63,20 @@ const rowStyle = computed(() => {
 })
 
 const { mapPositionToTime } = useTimePositionMapping()
-const barContainer: Ref<HTMLElement | null> = ref(null)
+const barContainerRefs: any = useTemplateRef("barContainer")
 
-provide(BAR_CONTAINER_KEY, barContainer)
+provide(BAR_CONTAINER_KEY, barContainerRefs)
 
 const onDrop = (e: MouseEvent) => {
-  const container = barContainer.value?.getBoundingClientRect()
+  const container = barContainerRefs.value?.[0]?.getBoundingClientRect()
   if (!container) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-ignore
+    // eslint-disable-next-line no-console
     console.error("Vue-Ganttastic: failed to find bar container element for row.")
     return
   }
   const xPos = e.clientX - container.left
   const datetime = mapPositionToTime(xPos)
   emit("drop", { e, datetime })
-}
-
-function isDifferenceLessThanThreeDays(date1: string, date2: string) {
-  // Convert dates to milliseconds
-  const msPerDay = 24 * 60 * 60 * 1000 // Milliseconds in a day
-  const diffInMs = Math.abs(new Date(date1).getTime() - new Date(date2).getTime()) // Absolute difference
-  const diffInDays = diffInMs / msPerDay // Convert to days
-
-  return diffInDays <= 3 // Check if less than 3 days
 }
 
 function doIntervalsOverlap(start1: Date, end1: Date, start2: Date, end2: Date) {
@@ -151,7 +139,6 @@ const isBlank = (str: string) => {
 }
 </script>
 
-<script setup lang="ts"></script>
 <style>
 .g-gantt-row {
   width: 100%;
@@ -163,8 +150,8 @@ const isBlank = (str: string) => {
 .g-gantt-row-label {
   position: absolute;
   top: 0;
-  left: 0px;
-  padding: 0px 8px;
+  left: 0;
+  padding: 0 8px;
   display: flex;
   align-items: center;
   height: 60%;
@@ -174,7 +161,7 @@ const isBlank = (str: string) => {
   border-bottom-right-radius: 6px;
   background: #f2f2f2;
   z-index: 3;
-  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.6);
 }
 
 .bar-transition-leave-active,

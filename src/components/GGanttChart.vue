@@ -1,14 +1,8 @@
 <template>
-  <div
-    class="g-gantt-chart-container"
-    :class="[
-      showQ1OfNextYear
-        ? 'g-gantt-chart-container--5-quarters-width'
-        : 'g-gantt-chart-container--4-quarters-width'
-    ]"
-  >
-    <div class="g-gantt-chart-overview" />
-    <div :class="[{ 'labels-in-column': !!labelColumnTitle }]">
+  <div class="g-gantt-chart-container">
+    <g-gantt-legend :legend="legend ? legend : {}" />
+
+    <div :class="[{ 'labels-in-column': !!labelColumnTitle }]" class="g-gantt-chart-wrapper">
       <g-gantt-label-column
         v-if="labelColumnTitle"
         :style="{
@@ -19,12 +13,19 @@
           <slot name="label-column-title" />
         </template>
         <template #label-column-row="{ label }">
-          <slot name="label-column-row" :label="label" />
+          <slot :label="label" name="label-column-row" />
         </template>
       </g-gantt-label-column>
       <div
         ref="ganttChart"
-        :class="['g-gantt-chart', { 'with-column': labelColumnTitle }]"
+        :class="[
+          'g-gantt-chart',
+          {
+            'with-column': labelColumnTitle,
+            'g-gantt-chart-container--4-quarters-width': !showQ1OfNextYear,
+            'g-gantt-chart-container--5-quarters-width': showQ1OfNextYear
+          }
+        ]"
         :style="{ width, background: colors.background, fontFamily: font }"
       >
         <g-gantt-grid v-if="grid" :highlighted-units="highlightedUnits" />
@@ -47,32 +48,29 @@
             props.verticalGrid ? 'g-gantt-chart-vertical-grid' : ''
           ]"
         >
-          <slot />
-          <!-- the g-gantt-row components go here -->
+          <div class="g-gantt-rows-list">
+            <slot />
+            <!-- the g-gantt-row components go here -->
+          </div>
           <g-gantt-grid :highlighted-units="highlightedUnits" />
         </div>
+
         <g-gantt-timeaxis v-if="!hideTimeaxis">
           <template #upper-timeunit="{ label, value, date }">
             <!-- expose upper-timeunit slot of g-gantt-timeaxis-->
-            <slot name="upper-timeunit" :label="label" :value="value" :date="date" />
+            <slot :date="date" :label="label" :value="value" name="upper-timeunit" />
           </template>
           <template #timeunit="{ label, value, date }">
             <!-- expose timeunit slot of g-gantt-timeaxis-->
-            <slot name="timeunit" :label="label" :value="value" :date="date" />
+            <slot :date="date" :label="label" :value="value" name="timeunit" />
           </template>
         </g-gantt-timeaxis>
       </div>
     </div>
-
-    <g-gantt-bar-tooltip :model-value="showTooltip || isDragging" :bar="tooltipBar">
-      <template #default>
-        <slot name="bar-tooltip" :bar="tooltipBar" />
-      </template>
-    </g-gantt-bar-tooltip>
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import {
   computed,
   provide,
@@ -84,26 +82,23 @@ import {
   type ToRefs
 } from "vue"
 
-import GGanttGrid from "./GGanttGrid.vue"
-import GGanttLabelColumn from "./GGanttLabelColumn.vue"
-import GGanttTimeaxis from "./GGanttTimeaxis.vue"
-import GGanttBarTooltip from "./GGanttBarTooltip.vue"
-import GGanttCurrentTime from "./GGanttCurrentTime.vue"
-
-import type { GanttBarObject } from "../types"
-import type { ColorSchemeKey } from "../color-schemes.js"
-
 import { useElementSize } from "@vueuse/core"
+import dayjs from "dayjs"
+import isBetween from "dayjs/plugin/isBetween.js"
+import type { GanttBarObject } from "../types"
+import { colorSchemes, type ColorSchemeKey, type ColorScheme } from "../color-schemes.js"
 import { DEFAULT_DATE_FORMAT } from "../composables/useDayjsHelper"
-import { colorSchemes, type ColorScheme } from "../color-schemes.js"
 import {
   CHART_ROWS_KEY,
   CONFIG_KEY,
   EMIT_BAR_EVENT_KEY,
   type ChartRow
 } from "../provider/symbols.js"
-import dayjs from "dayjs"
-import isBetween from "dayjs/plugin/isBetween.js"
+import GGanttGrid from "./GGanttGrid/GGanttGrid.vue"
+import GGanttLabelColumn from "./GGanttLabelColumn.vue"
+import GGanttTimeaxis from "./GGanttTimeaxis.vue"
+import GGanttCurrentTime from "./GGanttCurrentTime.vue"
+import GGanttLegend from "./GGanttLegend/GGanttLegend.vue"
 
 export interface GGanttChartProps {
   chartStart: string | Date
@@ -126,6 +121,7 @@ export interface GGanttChartProps {
   labelColumnTitle?: string
   labelColumnWidth?: string
   verticalGrid?: boolean
+  legend: Record<string, object[]>
 }
 
 export type GGanttChartConfig = ToRefs<Required<GGanttChartProps>> & {
@@ -153,6 +149,7 @@ const props = withDefaults(defineProps<GGanttChartProps>(), {
   labelColumnWidth: "150px"
 })
 
+// eslint-disable-next-line import/no-named-as-default-member
 dayjs.extend(isBetween)
 
 const showQ1OfNextYearStartDate = new Date()
@@ -229,24 +226,7 @@ const getChartRows = () => {
   return allBars
 }
 
-const showTooltip = ref(false)
 const isDragging = ref(false)
-const tooltipBar = ref<GanttBarObject | undefined>(undefined)
-let tooltipTimeoutId: ReturnType<typeof setTimeout>
-const initTooltip = (bar: GanttBarObject) => {
-  if (tooltipTimeoutId) {
-    clearTimeout(tooltipTimeoutId)
-  }
-  tooltipTimeoutId = setTimeout(() => {
-    showTooltip.value = true
-  }, 800)
-  tooltipBar.value = bar
-}
-
-const clearTooltip = () => {
-  clearTimeout(tooltipTimeoutId)
-  showTooltip.value = false
-}
 
 const emitBarEvent = (
   e: MouseEvent,
@@ -268,11 +248,11 @@ const emitBarEvent = (
       emit("dblclick-bar", { bar, e, datetime })
       break
     case "mouseenter":
-      initTooltip(bar)
+      // initTooltip(bar)
       emit("mouseenter-bar", { bar, e })
       break
     case "mouseleave":
-      clearTooltip()
+      // clearTooltip()
       emit("mouseleave-bar", { bar, e })
       break
     case "dragstart":
@@ -294,8 +274,6 @@ const emitBarEvent = (
 
 const ganttChart = ref<HTMLElement | null>(null)
 const chartSize = useElementSize(ganttChart)
-
-const ggantLowerUnit = document.getElementsByClassName("g-timeunit-low")
 
 provide(CHART_ROWS_KEY, getChartRows)
 provide(CONFIG_KEY, {
@@ -322,9 +300,17 @@ provide(EMIT_BAR_EVENT_KEY, emitBarEvent)
   height: 100%;
 }
 
+.g-gantt-chart-wrapper {
+  width: 100%;
+  padding-left: 16px;
+  overflow-x: scroll;
+}
+
 .g-gantt-chart-container {
+  width: 100%;
+  display: flex;
   background: #f0f1f2;
-  padding: 0 24px 0 16px;
+  padding: 0 24px 0 0;
   border-top: 4px solid #91979c;
   border-bottom: 4px solid #91979c;
 }
@@ -354,6 +340,7 @@ provide(EMIT_BAR_EVENT_KEY, emitBarEvent)
   padding-bottom: 4px;
 
   line-height: 24.8px;
+  color: #636a6d;
 }
 
 .with-column {
@@ -366,7 +353,6 @@ provide(EMIT_BAR_EVENT_KEY, emitBarEvent)
 .g-gantt-rows-container {
   position: relative;
   height: 400px;
-  padding: 16px 0;
 }
 
 .g-gantt-chart-container--5-quarters-width {
