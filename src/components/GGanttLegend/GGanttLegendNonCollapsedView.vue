@@ -1,6 +1,6 @@
 <template>
   <div class="g-gantt-legend-collapse">
-    <Icon
+    <ui-icon
       name="chevron-left"
       class="g-gantt-legend-do-collapse"
       size="24"
@@ -17,20 +17,25 @@
         height: areaHeights[index] + areaDividerHeight + 'px'
       }"
     >
-      <Icon class="g-gantt-legend-area-icon" size="24" :name="legend[areaName][0].area.icon" />
+      <ui-icon class="g-gantt-legend-area-icon" size="24" :name="legend[areaName][0].area.icon" />
 
       <div class="g-gantt-legend-promotion">
-        <div v-for="promotion in promotions" :key="promotion.category.name" class="g-gantt-legend-category-color" :style="{backgroundColor: '#' + promotion.category.color}" />
+        <div
+          v-for="promotion in promotions"
+          :key="promotion.category.name"
+          class="g-gantt-legend-category-color"
+          :style="{ backgroundColor: '#' + promotion.category.color }"
+        />
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { defineProps, nextTick, onMounted, ref } from 'vue'
-import Icon from '../Icon.vue'
+import { defineProps, nextTick, onMounted, ref } from "vue"
+import UiIcon from "../UiIcon.vue"
 
 defineProps<{
-  legend: Record<string, any[]>;
+  legend: Record<string, any[]>
   isCollapsed: boolean
 }>()
 
@@ -39,14 +44,13 @@ const areaHeights = ref<number[]>([])
 
 onMounted(() => {
   nextTick(() => {
-    const areasList = Object.values(document.querySelector('.g-gantt-rows-list')!.children)
+    const areasList = Object.values(document.querySelector(".g-gantt-rows-list")!.children)
 
     areasList.forEach((area) => {
       areaHeights.value.push(area.clientHeight)
     })
   })
 })
-
 </script>
 <style scoped>
 .g-gantt-legend-collapse {

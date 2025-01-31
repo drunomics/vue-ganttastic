@@ -42,7 +42,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, toRefs, watch, onMounted, inject, h } from "vue"
+import { computed, ref, toRefs, watch, onMounted, inject, h, type Ref } from "vue"
 
 import { useTippy } from "vue-tippy"
 import useTimePositionMapping from "../composables/useTimePositionMapping.js"
@@ -146,6 +146,8 @@ const onMouseEvent = (e: MouseEvent) => {
     return
   }
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const barContainer = barContainerEl?.value?.[0]?.getBoundingClientRect()
   if (!barContainer) {
     return

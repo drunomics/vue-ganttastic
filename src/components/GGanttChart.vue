@@ -149,7 +149,6 @@ const props = withDefaults(defineProps<GGanttChartProps>(), {
   labelColumnWidth: "150px"
 })
 
-// eslint-disable-next-line import/no-named-as-default-member
 dayjs.extend(isBetween)
 
 const showQ1OfNextYearStartDate = new Date()

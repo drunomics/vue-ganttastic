@@ -11,6 +11,14 @@ export declare type GanttBarObject = {
         pushOnOverlap?: boolean;
         dragLimitLeft?: number;
         dragLimitRight?: number;
+        tooltipInfo?: {
+            areaName: string;
+            categoryName: string;
+            title: string;
+            icon: string;
+            publishedAt: number;
+            promotionUrl: string;
+        };
         style?: CSSProperties;
         class?: string;
         asArrow?: boolean;

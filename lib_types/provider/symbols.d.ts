@@ -13,4 +13,4 @@ export declare type EmitBarEvent = (e: MouseEvent, bar: GanttBarObject, datetime
 export declare const CHART_ROWS_KEY: InjectionKey<GetChartRows>;
 export declare const CONFIG_KEY: InjectionKey<GGanttChartConfig>;
 export declare const EMIT_BAR_EVENT_KEY: InjectionKey<EmitBarEvent>;
-export declare const BAR_CONTAINER_KEY: InjectionKey<Ref<HTMLElement | null>>;
+export declare const BAR_CONTAINER_KEY: InjectionKey<Ref<HTMLElement | null, HTMLElement | null>>;

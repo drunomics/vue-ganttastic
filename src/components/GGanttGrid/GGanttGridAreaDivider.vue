@@ -24,7 +24,7 @@
   />
 </template>
 <script setup lang="ts">
-import useTimeaxisUnits from '../../composables/useTimeaxisUnits'
+import useTimeaxisUnits from "../../composables/useTimeaxisUnits"
 
 const { timeaxisUnits } = useTimeaxisUnits()
 
@@ -34,10 +34,10 @@ defineProps<{
 
 const getBorderRight = (label: string, index: number) => {
   if (index === timeaxisUnits.value.lowerUnits.length - 1) {
-    return 'unset'
+    return "unset"
   }
 
-  return label && Number(label) % 13 === 0 ? '2px solid #a8adb3' : '2px solid #f0f1f2'
+  return label && Number(label) % 13 === 0 ? "2px solid #a8adb3" : "2px solid #f0f1f2"
 }
 
 const getBackgroundColor = (label: string) => {
@@ -45,10 +45,9 @@ const getBackgroundColor = (label: string) => {
   const q4 = +label >= 40 && +label <= 52
 
   if (q2 || q4) {
-    return '#f7f8f9'
+    return "#f7f8f9"
   } else {
-    return '#ffffff'
+    return "#ffffff"
   }
 }
-
 </script>

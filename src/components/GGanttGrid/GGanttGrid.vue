@@ -6,10 +6,10 @@
 </template>
 
 <script lang="ts" setup>
-import { nextTick, onMounted, ref } from 'vue'
-import { useElementSize } from '@vueuse/core'
-import GGanttGridCurrentDay from './GGanttGridCurrentDay.vue'
-import GGanttGridAreaDivider from './GGanttGridAreaDivider.vue'
+import { nextTick, onMounted, ref } from "vue"
+import { useElementSize } from "@vueuse/core"
+import GGanttGridCurrentDay from "./GGanttGridCurrentDay.vue"
+import GGanttGridAreaDivider from "./GGanttGridAreaDivider.vue"
 
 defineProps<{
   highlightedUnits?: number[]
@@ -22,7 +22,7 @@ const areaHeights = ref<number[]>([])
 
 onMounted(() => {
   nextTick(() => {
-    const areasList = Object.values(document.querySelector('.g-gantt-rows-list')!.children)
+    const areasList = Object.values(document.querySelector(".g-gantt-rows-list")!.children)
 
     areasList.forEach((area) => {
       areaHeights.value.push(area.clientHeight)

@@ -1,6 +1,6 @@
 <template>
   <div class="g-gantt-legend-collapse">
-    <Icon
+    <ui-icon
       name="chevron-right"
       class="g-gantt-legend-do-uncollapse"
       size="24"
@@ -18,15 +18,22 @@
       }"
     >
       <div class="g-gantt-legend-title">
-        <Icon size="32" :name="legend[areaName][0].area.icon" />
+        <ui-icon size="32" :name="legend[areaName][0].area.icon" />
 
         <p class="g-gantt-legend-area">
           {{ areaName }}
         </p>
       </div>
 
-      <div v-for="promotion in promotions" :key="promotion.category.name" class="g-gantt-legend-promotion">
-        <div class="g-gantt-legend-category-color" :style="{backgroundColor: '#' + promotion.category.color}" />
+      <div
+        v-for="promotion in promotions"
+        :key="promotion.category.name"
+        class="g-gantt-legend-promotion"
+      >
+        <div
+          class="g-gantt-legend-category-color"
+          :style="{ backgroundColor: '#' + promotion.category.color }"
+        />
 
         <p class="g-gantt-legend-category-name">
           {{ promotion.category.name }}
@@ -36,11 +43,11 @@
   </div>
 </template>
 <script setup lang="ts">
-import { defineProps, onMounted, ref, nextTick } from 'vue'
-import Icon from '../Icon.vue'
+import { defineProps, onMounted, ref, nextTick } from "vue"
+import UiIcon from "../UiIcon.vue"
 
 defineProps<{
-  legend: Record<string, any[]>;
+  legend: Record<string, any[]>
   isCollapsed: boolean
 }>()
 
@@ -49,14 +56,13 @@ const areaHeights = ref<number[]>([])
 
 onMounted(() => {
   nextTick(() => {
-    const areasList = Object.values(document.querySelector('.g-gantt-rows-list')!.children)
+    const areasList = Object.values(document.querySelector(".g-gantt-rows-list")!.children)
 
     areasList.forEach((area) => {
       areaHeights.value.push(area.clientHeight)
     })
   })
 })
-
 </script>
 <style scoped>
 .g-gantt-legend-collapse {
@@ -80,7 +86,7 @@ onMounted(() => {
   font-weight: 700;
   line-height: 24.8px;
 
-  color: #1B1E1F;
+  color: #1b1e1f;
 }
 
 .g-gantt-legend-category-color {
@@ -113,6 +119,6 @@ onMounted(() => {
   font-weight: 400;
   line-height: 18.2px;
 
-  color: #1B1E1F;
+  color: #1b1e1f;
 }
 </style>

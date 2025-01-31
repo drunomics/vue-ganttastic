@@ -12,7 +12,7 @@
           {{ bar?.ganttBarConfig?.tooltipInfo?.areaName }}
         </span>
 
-        <Icon v-if="bar" :name="bar?.ganttBarConfig?.tooltipInfo?.icon" size="24" />
+        <ui-icon v-if="bar" :name="bar?.ganttBarConfig?.tooltipInfo?.icon" size="24" />
       </div>
 
       <div class="g-gantt-tooltip-category-container">
@@ -40,7 +40,7 @@
           </slot>
         </p>
 
-        <Icon
+        <ui-icon
           v-if="tooltipIsClickable"
           name="chevron-right"
           size="16"
@@ -55,8 +55,8 @@
 import { computed, toRefs, ref } from "vue"
 import dayjs from "dayjs"
 import type { GanttBarObject } from "../types"
-import Icon from "./Icon.vue"
 import type { GGanttChartConfig } from "./GGanttChart.vue"
+import UiIcon from "./UiIcon.vue"
 
 const DEFAULT_DOT_COLOR = "cadetblue"
 

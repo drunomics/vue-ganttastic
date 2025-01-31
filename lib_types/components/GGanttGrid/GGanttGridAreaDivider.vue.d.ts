@@ -1,13 +1,8 @@
-import type { GanttBarObject } from "../types";
-declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<import("vue").ExtractPropTypes<__VLS_TypePropsToRuntimeProps<{
-    bar: GanttBarObject;
+declare const _default: import("vue").DefineComponent<import("vue").ExtractPropTypes<__VLS_TypePropsToRuntimeProps<{
+    areaHeights: number[];
 }>>, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").PublicProps, Readonly<import("vue").ExtractPropTypes<__VLS_TypePropsToRuntimeProps<{
-    bar: GanttBarObject;
-}>>> & Readonly<{}>, {}, {}, {}, {}, string, import("vue").ComponentProvideOptions, true, {}, any>, {
-    default?(_: {
-        bar: GanttBarObject;
-    }): any;
-}>;
+    areaHeights: number[];
+}>>> & Readonly<{}>, {}, {}, {}, {}, string, import("vue").ComponentProvideOptions, true, {}, any>;
 export default _default;
 declare type __VLS_NonUndefinedable<T> = T extends undefined ? never : T;
 declare type __VLS_TypePropsToRuntimeProps<T> = {
@@ -16,10 +11,5 @@ declare type __VLS_TypePropsToRuntimeProps<T> = {
     } : {
         type: import('vue').PropType<T[K]>;
         required: true;
-    };
-};
-declare type __VLS_WithTemplateSlots<T, S> = T & {
-    new (): {
-        $slots: S;
     };
 };

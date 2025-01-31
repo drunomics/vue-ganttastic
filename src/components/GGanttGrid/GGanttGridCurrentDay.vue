@@ -4,10 +4,10 @@
       position: 'absolute',
       top: '-65px',
       zIndex: 3,
-      left: (dayWidth * daysPassed) - 7.5 + 'px',
+      left: dayWidth * daysPassed - 7.5 + 'px'
     }"
   >
-    <Icon
+    <ui-icon
       name="marker-current-date"
       size="16"
       :style="{
@@ -20,7 +20,7 @@
       position: 'absolute',
       top: '-52px',
       left: !applyRightPosition ? currentDayLeftVal + 'px' : 'unset',
-      right: applyRightPosition ? currentDayRightVal + 'px': 'unset',
+      right: applyRightPosition ? currentDayRightVal + 'px' : 'unset',
       width: '68px',
       height: '20px',
       backgroundColor: 'white',
@@ -45,9 +45,9 @@
   />
 </template>
 <script setup lang="ts">
-import dayjs from 'dayjs'
-import { computed, ref, defineProps } from 'vue'
-import Icon from '../Icon.vue'
+import dayjs from "dayjs"
+import { computed, ref, defineProps } from "vue"
+import UiIcon from "../UiIcon.vue"
 
 const props = defineProps<{
   parentWidth: number
@@ -62,14 +62,14 @@ const daysPassed = computed(() => {
 
 const dayWidth = computed(() => props.parentWidth / 52 / 7)
 
-const applyRightPosition = ref(daysPassed.value >= (365 - 10))
+const applyRightPosition = ref(daysPassed.value >= 365 - 10)
 
 const currentDayRightVal = computed(() => {
-  if (daysPassed.value >= (365 - 10)) {
+  if (daysPassed.value >= 365 - 10) {
     return 0
   }
 
-  return (dayWidth.value * daysPassed.value) - 33
+  return dayWidth.value * daysPassed.value - 33
 })
 
 const currentDayLeftVal = computed(() => {
@@ -77,9 +77,8 @@ const currentDayLeftVal = computed(() => {
     return 0
   }
 
-  return (dayWidth.value * daysPassed.value) - 33
+  return dayWidth.value * daysPassed.value - 33
 })
-
 </script>
 <style scoped>
 .g-gantt-grid-current-date {

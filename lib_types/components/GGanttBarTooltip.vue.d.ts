@@ -1,11 +1,14 @@
 import type { GanttBarObject } from "../types";
-declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__VLS_TypePropsToRuntimeProps<{
+import type { GGanttChartConfig } from "./GGanttChart.vue";
+declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<import("vue").ExtractPropTypes<__VLS_TypePropsToRuntimeProps<{
     bar: GanttBarObject | undefined;
-    modelValue: boolean;
-}>, {}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<__VLS_TypePropsToRuntimeProps<{
+    config: Pick<GGanttChartConfig, "barStart" | "barEnd" | "font">;
+    toDayjs: any;
+}>>, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").PublicProps, Readonly<import("vue").ExtractPropTypes<__VLS_TypePropsToRuntimeProps<{
     bar: GanttBarObject | undefined;
-    modelValue: boolean;
-}>>>, {}, {}>, {
+    config: Pick<GGanttChartConfig, "barStart" | "barEnd" | "font">;
+    toDayjs: any;
+}>>> & Readonly<{}>, {}, {}, {}, {}, string, import("vue").ComponentProvideOptions, true, {}, any>, {
     default?(_: {
         bar: GanttBarObject | undefined;
         barStart: any;
