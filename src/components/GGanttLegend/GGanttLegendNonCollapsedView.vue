@@ -38,6 +38,7 @@ defineProps<{
   legend: Record<string, any[]>
   isCollapsed: boolean
 }>()
+defineEmits(["update:isCollapsed"])
 
 const areaDividerHeight = 6
 const areaHeights = ref<number[]>([])
