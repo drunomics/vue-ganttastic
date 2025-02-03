@@ -247,11 +247,9 @@ const emitBarEvent = (
       emit("dblclick-bar", { bar, e, datetime })
       break
     case "mouseenter":
-      // initTooltip(bar)
       emit("mouseenter-bar", { bar, e })
       break
     case "mouseleave":
-      // clearTooltip()
       emit("mouseleave-bar", { bar, e })
       break
     case "dragstart":
