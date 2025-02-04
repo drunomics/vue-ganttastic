@@ -86,12 +86,15 @@ const setCorrectArrowPosition = (placement: string) => {
 
   const matched = transform.match(/translate3d\((-?\d+)/)
 
+  const tooltipHeight: number = document.querySelector(".tippy-content")?.clientHeight as number
+
   if (placement === "bottom" && matched) {
     const svg = tippyArrow.firstElementChild as unknown as SVGElement
     svg.style.transform = "rotateX(180deg)"
 
     const xAxisVal = parseInt(matched[1])
-    tippyArrow.style.transform = `translate3d(${xAxisVal}px, -115px, 0px)`
+
+    tippyArrow.style.transform = `translate3d(${xAxisVal}px, -${tooltipHeight + 7}px, 0px)`
   }
 
   if (placement === "top" && matched) {
