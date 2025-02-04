@@ -7,9 +7,11 @@
       left: dayWidth * daysPassed - 7.5 + 'px'
     }"
   >
-    <ui-icon
+    <component
+      :is="iconComponent"
       name="marker-current-date"
       size="16"
+      size-s="16"
       :style="{
         color: '#C882BE'
       }"
@@ -46,12 +48,13 @@
 </template>
 <script setup lang="ts">
 import dayjs from "dayjs"
-import { computed, ref, defineProps } from "vue"
-import UiIcon from "../UiIcon.vue"
+import { computed, ref, defineProps, inject } from "vue"
 
 const props = defineProps<{
   parentWidth: number
 }>()
+
+const iconComponent = inject("iconComponent")
 
 const today = new Date()
 const startOfYear = new Date(today.getFullYear(), 0, 1)

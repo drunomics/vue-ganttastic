@@ -1,6 +1,7 @@
 <template>
   <div class="g-gantt-legend-collapse">
-    <ui-icon
+    <component
+      :is="iconComponent"
       name="chevron-left"
       class="g-gantt-legend-do-collapse"
       size="24"
@@ -17,7 +18,12 @@
         height: areaHeights[index] + areaDividerHeight + 'px'
       }"
     >
-      <ui-icon class="g-gantt-legend-area-icon" size="24" :name="legend[areaName][0].area.icon" />
+      <component
+        :is="iconComponent"
+        class="g-gantt-legend-area-icon"
+        size="24"
+        :name="legend[areaName][0].area.icon"
+      />
 
       <div class="g-gantt-legend-promotion">
         <div
@@ -31,8 +37,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { defineProps, nextTick, onMounted, ref } from "vue"
-import UiIcon from "../UiIcon.vue"
+import { defineProps, inject, nextTick, onMounted, ref } from "vue"
 
 defineProps<{
   legend: Record<string, any[]>
@@ -40,6 +45,7 @@ defineProps<{
 }>()
 defineEmits(["update:isCollapsed"])
 
+const iconComponent = inject("iconComponent")
 const areaDividerHeight = 6
 const areaHeights = ref<number[]>([])
 

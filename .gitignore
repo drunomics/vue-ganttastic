@@ -1,6 +1,5 @@
 .DS_Store
 node_modules
-src/assets/*.svg
 
 # local env files
 .env.local
