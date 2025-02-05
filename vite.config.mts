@@ -1,19 +1,21 @@
-import { fileURLToPath, URL } from "node:url"
+import { fileURLToPath, URL } from 'node:url'
 
-import { defineConfig } from "vite"
-import vue from "@vitejs/plugin-vue"
-import postcssPresetEnv from "postcss-preset-env"
-import styleInject from "@senojs/rollup-plugin-style-inject"
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import postcssPresetEnv from 'postcss-preset-env'
+import styleInject from '@senojs/rollup-plugin-style-inject'
 import vitePluginEslint from 'vite-plugin-eslint'
+import svgLoader from 'vite-svg-loader'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
     styleInject({
-      insertAt: "top"
+      insertAt: 'top'
     }),
-    vitePluginEslint()
+    vitePluginEslint(),
+    svgLoader()
   ],
   css: {
     postcss: {
@@ -22,28 +24,28 @@ export default defineConfig({
   },
   build: {
     lib:
-      process.env.NODE_ENV === "production"
+      process.env.NODE_ENV === 'production'
         ? {
-            entry: fileURLToPath(
-              new URL("src/vue-ganttastic.ts", import.meta.url)
-            ),
-            name: "VueGanttastic",
-            fileName: "vue-ganttastic"
-          }
+          entry: fileURLToPath(
+            new URL('src/vue-ganttastic.ts', import.meta.url)
+          ),
+          name: 'VueGanttastic',
+          fileName: 'vue-ganttastic'
+        }
         : undefined,
-    outDir: process.env.NODE_ENV === "production" ? "lib" : "dist",
+    outDir: process.env.NODE_ENV === 'production' ? 'lib' : 'dist',
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
       // into the library
-      external: ["vue", "dayjs"],
+      external: ['vue', 'dayjs'],
       output: {
         // Provide global variables to use in the UMD build
         // for externalized deps
         globals: {
-          vue: "Vue",
-          dayjs: "dayjs"
+          vue: 'Vue',
+          dayjs: 'dayjs'
         },
-        exports: "named"
+        exports: 'named'
       }
     }
   }

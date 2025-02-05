@@ -1,25 +1,25 @@
 import type { GanttBarObject } from "../types";
-declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__VLS_TypePropsToRuntimeProps<{
+declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<import("vue").ExtractPropTypes<__VLS_TypePropsToRuntimeProps<{
     label: string;
     bars: GanttBarObject[];
     overlaps?: GanttBarObject[] | undefined;
     highlightOnHover?: boolean | undefined;
-}>, {}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
+}>>, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
     drop: (value: {
         e: MouseEvent;
         datetime: string | Date;
     }) => void;
-}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<__VLS_TypePropsToRuntimeProps<{
+}, string, import("vue").PublicProps, Readonly<import("vue").ExtractPropTypes<__VLS_TypePropsToRuntimeProps<{
     label: string;
     bars: GanttBarObject[];
     overlaps?: GanttBarObject[] | undefined;
     highlightOnHover?: boolean | undefined;
-}>>> & {
+}>>> & Readonly<{
     onDrop?: ((value: {
         e: MouseEvent;
         datetime: string | Date;
     }) => any) | undefined;
-}, {}, {}>, {
+}>, {}, {}, {}, {}, string, import("vue").ComponentProvideOptions, true, {}, any>, {
     label?(_: {}): any;
     "bar-label"?(_: {
         bar: {
@@ -34,6 +34,14 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
                 pushOnOverlap?: boolean | undefined;
                 dragLimitLeft?: number | undefined;
                 dragLimitRight?: number | undefined;
+                tooltipInfo?: {
+                    areaName: string;
+                    categoryName: string;
+                    title: string;
+                    icon: string;
+                    publishedAt: number;
+                    promotionUrl: string;
+                } | undefined;
                 style?: {
                     [x: `--${string}`]: string | number | undefined;
                     accentColor?: import("csstype").Property.AccentColor | undefined;
@@ -49,6 +57,8 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
                     animationIterationCount?: import("csstype").Property.AnimationIterationCount | undefined;
                     animationName?: import("csstype").Property.AnimationName | undefined;
                     animationPlayState?: import("csstype").Property.AnimationPlayState | undefined;
+                    animationRangeEnd?: import("csstype").Property.AnimationRangeEnd<string | number> | undefined;
+                    animationRangeStart?: import("csstype").Property.AnimationRangeStart<string | number> | undefined;
                     animationTimeline?: import("csstype").Property.AnimationTimeline | undefined;
                     animationTimingFunction?: import("csstype").Property.AnimationTimingFunction | undefined;
                     appearance?: import("csstype").Property.Appearance | undefined;
@@ -170,6 +180,10 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
                     fontStretch?: import("csstype").Property.FontStretch | undefined;
                     fontStyle?: import("csstype").Property.FontStyle | undefined;
                     fontSynthesis?: import("csstype").Property.FontSynthesis | undefined;
+                    fontSynthesisPosition?: import("csstype").Property.FontSynthesisPosition | undefined;
+                    fontSynthesisSmallCaps?: import("csstype").Property.FontSynthesisSmallCaps | undefined;
+                    fontSynthesisStyle?: import("csstype").Property.FontSynthesisStyle | undefined;
+                    fontSynthesisWeight?: import("csstype").Property.FontSynthesisWeight | undefined;
                     fontVariant?: import("csstype").Property.FontVariant | undefined;
                     fontVariantAlternates?: import("csstype").Property.FontVariantAlternates | undefined;
                     fontVariantCaps?: import("csstype").Property.FontVariantCaps | undefined;
@@ -243,6 +257,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
                     maskRepeat?: import("csstype").Property.MaskRepeat | undefined;
                     maskSize?: import("csstype").Property.MaskSize<string | number> | undefined;
                     maskType?: import("csstype").Property.MaskType | undefined;
+                    masonryAutoFlow?: import("csstype").Property.MasonryAutoFlow | undefined;
                     mathDepth?: import("csstype").Property.MathDepth | undefined;
                     mathShift?: import("csstype").Property.MathShift | undefined;
                     mathStyle?: import("csstype").Property.MathStyle | undefined;
@@ -282,6 +297,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
                     overflowWrap?: import("csstype").Property.OverflowWrap | undefined;
                     overflowX?: import("csstype").Property.OverflowX | undefined;
                     overflowY?: import("csstype").Property.OverflowY | undefined;
+                    overlay?: import("csstype").Property.Overlay | undefined;
                     overscrollBehaviorBlock?: import("csstype").Property.OverscrollBehaviorBlock | undefined;
                     overscrollBehaviorInline?: import("csstype").Property.OverscrollBehaviorInline | undefined;
                     overscrollBehaviorX?: import("csstype").Property.OverscrollBehaviorX | undefined;
@@ -369,12 +385,15 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
                     textTransform?: import("csstype").Property.TextTransform | undefined;
                     textUnderlineOffset?: import("csstype").Property.TextUnderlineOffset<string | number> | undefined;
                     textUnderlinePosition?: import("csstype").Property.TextUnderlinePosition | undefined;
+                    textWrap?: import("csstype").Property.TextWrap | undefined;
+                    timelineScope?: import("csstype").Property.TimelineScope | undefined;
                     top?: import("csstype").Property.Top<string | number> | undefined;
                     touchAction?: import("csstype").Property.TouchAction | undefined;
                     transform?: import("csstype").Property.Transform | undefined;
                     transformBox?: import("csstype").Property.TransformBox | undefined;
                     transformOrigin?: import("csstype").Property.TransformOrigin<string | number> | undefined;
                     transformStyle?: import("csstype").Property.TransformStyle | undefined;
+                    transitionBehavior?: import("csstype").Property.TransitionBehavior | undefined;
                     transitionDelay?: import("csstype").Property.TransitionDelay<string & {}> | undefined;
                     transitionDuration?: import("csstype").Property.TransitionDuration<string & {}> | undefined;
                     transitionProperty?: import("csstype").Property.TransitionProperty | undefined;
@@ -383,9 +402,14 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
                     unicodeBidi?: import("csstype").Property.UnicodeBidi | undefined;
                     userSelect?: import("csstype").Property.UserSelect | undefined;
                     verticalAlign?: import("csstype").Property.VerticalAlign<string | number> | undefined;
+                    viewTimelineAxis?: import("csstype").Property.ViewTimelineAxis | undefined;
+                    viewTimelineInset?: import("csstype").Property.ViewTimelineInset<string | number> | undefined;
+                    viewTimelineName?: import("csstype").Property.ViewTimelineName | undefined;
                     viewTransitionName?: import("csstype").Property.ViewTransitionName | undefined;
                     visibility?: import("csstype").Property.Visibility | undefined;
                     whiteSpace?: import("csstype").Property.WhiteSpace | undefined;
+                    whiteSpaceCollapse?: import("csstype").Property.WhiteSpaceCollapse | undefined;
+                    whiteSpaceTrim?: import("csstype").Property.WhiteSpaceTrim | undefined;
                     widows?: import("csstype").Property.Widows | undefined;
                     width?: import("csstype").Property.Width<string | number> | undefined;
                     willChange?: import("csstype").Property.WillChange | undefined;
@@ -397,6 +421,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
                     zoom?: import("csstype").Property.Zoom | undefined;
                     all?: import("csstype").Globals | undefined;
                     animation?: import("csstype").Property.Animation<string & {}> | undefined;
+                    animationRange?: import("csstype").Property.AnimationRange<string | number> | undefined;
                     background?: import("csstype").Property.Background<string | number> | undefined;
                     backgroundPosition?: import("csstype").Property.BackgroundPosition<string | number> | undefined;
                     border?: import("csstype").Property.Border<string | number> | undefined;
@@ -461,6 +486,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
                     textDecoration?: import("csstype").Property.TextDecoration<string | number> | undefined;
                     textEmphasis?: import("csstype").Property.TextEmphasis | undefined;
                     transition?: import("csstype").Property.Transition<string & {}> | undefined;
+                    viewTimeline?: import("csstype").Property.ViewTimeline | undefined;
                     MozAnimationDelay?: import("csstype").Property.AnimationDelay<string & {}> | undefined;
                     MozAnimationDirection?: import("csstype").Property.AnimationDirection | undefined;
                     MozAnimationDuration?: import("csstype").Property.AnimationDuration<string & {}> | undefined;
@@ -470,7 +496,6 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
                     MozAnimationPlayState?: import("csstype").Property.AnimationPlayState | undefined;
                     MozAnimationTimingFunction?: import("csstype").Property.AnimationTimingFunction | undefined;
                     MozAppearance?: import("csstype").Property.MozAppearance | undefined;
-                    MozBackfaceVisibility?: import("csstype").Property.BackfaceVisibility | undefined;
                     MozBinding?: import("csstype").Property.MozBinding | undefined;
                     MozBorderBottomColors?: import("csstype").Property.MozBorderBottomColors | undefined;
                     MozBorderEndColor?: import("csstype").Property.BorderInlineEndColor | undefined;
@@ -497,20 +522,16 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
                     MozMarginStart?: import("csstype").Property.MarginInlineStart<string | number> | undefined;
                     MozOrient?: import("csstype").Property.MozOrient | undefined;
                     MozOsxFontSmoothing?: import("csstype").Property.FontSmooth<string | number> | undefined;
+                    MozOutlineRadiusBottomleft?: import("csstype").Property.MozOutlineRadiusBottomleft<string | number> | undefined;
+                    MozOutlineRadiusBottomright?: import("csstype").Property.MozOutlineRadiusBottomright<string | number> | undefined;
+                    MozOutlineRadiusTopleft?: import("csstype").Property.MozOutlineRadiusTopleft<string | number> | undefined;
+                    MozOutlineRadiusTopright?: import("csstype").Property.MozOutlineRadiusTopright<string | number> | undefined;
                     MozPaddingEnd?: import("csstype").Property.PaddingInlineEnd<string | number> | undefined;
                     MozPaddingStart?: import("csstype").Property.PaddingInlineStart<string | number> | undefined;
-                    MozPerspective?: import("csstype").Property.Perspective<string | number> | undefined;
-                    MozPerspectiveOrigin?: import("csstype").Property.PerspectiveOrigin<string | number> | undefined;
                     MozStackSizing?: import("csstype").Property.MozStackSizing | undefined;
                     MozTabSize?: import("csstype").Property.TabSize<string | number> | undefined;
                     MozTextBlink?: import("csstype").Property.MozTextBlink | undefined;
                     MozTextSizeAdjust?: import("csstype").Property.TextSizeAdjust | undefined;
-                    MozTransformOrigin?: import("csstype").Property.TransformOrigin<string | number> | undefined;
-                    MozTransformStyle?: import("csstype").Property.TransformStyle | undefined;
-                    MozTransitionDelay?: import("csstype").Property.TransitionDelay<string & {}> | undefined;
-                    MozTransitionDuration?: import("csstype").Property.TransitionDuration<string & {}> | undefined;
-                    MozTransitionProperty?: import("csstype").Property.TransitionProperty | undefined;
-                    MozTransitionTimingFunction?: import("csstype").Property.TransitionTimingFunction | undefined;
                     MozUserFocus?: import("csstype").Property.MozUserFocus | undefined;
                     MozUserModify?: import("csstype").Property.MozUserModify | undefined;
                     MozUserSelect?: import("csstype").Property.UserSelect | undefined;
@@ -690,7 +711,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
                     MozBorderImage?: import("csstype").Property.BorderImage | undefined;
                     MozColumnRule?: import("csstype").Property.ColumnRule<string | number> | undefined;
                     MozColumns?: import("csstype").Property.Columns<string | number> | undefined;
-                    MozTransition?: import("csstype").Property.Transition<string & {}> | undefined;
+                    MozOutlineRadius?: import("csstype").Property.MozOutlineRadius<string | number> | undefined;
                     msContentZoomLimit?: import("csstype").Property.MsContentZoomLimit | undefined;
                     msContentZoomSnap?: import("csstype").Property.MsContentZoomSnap | undefined;
                     msFlex?: import("csstype").Property.Flex<string | number> | undefined;
@@ -748,6 +769,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
                     KhtmlLineBreak?: import("csstype").Property.LineBreak | undefined;
                     KhtmlOpacity?: import("csstype").Property.Opacity | undefined;
                     KhtmlUserSelect?: import("csstype").Property.UserSelect | undefined;
+                    MozBackfaceVisibility?: import("csstype").Property.BackfaceVisibility | undefined;
                     MozBackgroundClip?: import("csstype").Property.BackgroundClip | undefined;
                     MozBackgroundInlinePolicy?: import("csstype").Property.BoxDecorationBreak | undefined;
                     MozBackgroundOrigin?: import("csstype").Property.BackgroundOrigin | undefined;
@@ -769,17 +791,22 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
                     MozOpacity?: import("csstype").Property.Opacity | undefined;
                     MozOutline?: import("csstype").Property.Outline<string | number> | undefined;
                     MozOutlineColor?: import("csstype").Property.OutlineColor | undefined;
-                    MozOutlineRadius?: import("csstype").Property.MozOutlineRadius<string | number> | undefined;
-                    MozOutlineRadiusBottomleft?: import("csstype").Property.MozOutlineRadiusBottomleft<string | number> | undefined;
-                    MozOutlineRadiusBottomright?: import("csstype").Property.MozOutlineRadiusBottomright<string | number> | undefined;
-                    MozOutlineRadiusTopleft?: import("csstype").Property.MozOutlineRadiusTopleft<string | number> | undefined;
-                    MozOutlineRadiusTopright?: import("csstype").Property.MozOutlineRadiusTopright<string | number> | undefined;
                     MozOutlineStyle?: import("csstype").Property.OutlineStyle | undefined;
                     MozOutlineWidth?: import("csstype").Property.OutlineWidth<string | number> | undefined;
+                    MozPerspective?: import("csstype").Property.Perspective<string | number> | undefined;
+                    MozPerspectiveOrigin?: import("csstype").Property.PerspectiveOrigin<string | number> | undefined;
                     MozTextAlignLast?: import("csstype").Property.TextAlignLast | undefined;
                     MozTextDecorationColor?: import("csstype").Property.TextDecorationColor | undefined;
                     MozTextDecorationLine?: import("csstype").Property.TextDecorationLine | undefined;
                     MozTextDecorationStyle?: import("csstype").Property.TextDecorationStyle | undefined;
+                    MozTransform?: import("csstype").Property.Transform | undefined;
+                    MozTransformOrigin?: import("csstype").Property.TransformOrigin<string | number> | undefined;
+                    MozTransformStyle?: import("csstype").Property.TransformStyle | undefined;
+                    MozTransition?: import("csstype").Property.Transition<string & {}> | undefined;
+                    MozTransitionDelay?: import("csstype").Property.TransitionDelay<string & {}> | undefined;
+                    MozTransitionDuration?: import("csstype").Property.TransitionDuration<string & {}> | undefined;
+                    MozTransitionProperty?: import("csstype").Property.TransitionProperty | undefined;
+                    MozTransitionTimingFunction?: import("csstype").Property.TransitionTimingFunction | undefined;
                     MozUserInput?: import("csstype").Property.MozUserInput | undefined;
                     msImeMode?: import("csstype").Property.ImeMode | undefined;
                     OAnimation?: import("csstype").Property.Animation<string & {}> | undefined;
@@ -812,8 +839,6 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
                     WebkitBoxOrdinalGroup?: import("csstype").Property.BoxOrdinalGroup | undefined;
                     WebkitBoxOrient?: import("csstype").Property.BoxOrient | undefined;
                     WebkitBoxPack?: import("csstype").Property.BoxPack | undefined;
-                    WebkitScrollSnapPointsX?: import("csstype").Property.ScrollSnapPointsX | undefined;
-                    WebkitScrollSnapPointsY?: import("csstype").Property.ScrollSnapPointsY | undefined;
                     alignmentBaseline?: import("csstype").Property.AlignmentBaseline | undefined;
                     baselineShift?: import("csstype").Property.BaselineShift<string | number> | undefined;
                     clipRule?: import("csstype").Property.ClipRule | undefined;
@@ -857,6 +882,8 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
                     "animation-iteration-count"?: import("csstype").Property.AnimationIterationCount | undefined;
                     "animation-name"?: import("csstype").Property.AnimationName | undefined;
                     "animation-play-state"?: import("csstype").Property.AnimationPlayState | undefined;
+                    "animation-range-end"?: import("csstype").Property.AnimationRangeEnd<string | number> | undefined;
+                    "animation-range-start"?: import("csstype").Property.AnimationRangeStart<string | number> | undefined;
                     "animation-timeline"?: import("csstype").Property.AnimationTimeline | undefined;
                     "animation-timing-function"?: import("csstype").Property.AnimationTimingFunction | undefined;
                     "aspect-ratio"?: import("csstype").Property.AspectRatio | undefined;
@@ -967,6 +994,10 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
                     "font-stretch"?: import("csstype").Property.FontStretch | undefined;
                     "font-style"?: import("csstype").Property.FontStyle | undefined;
                     "font-synthesis"?: import("csstype").Property.FontSynthesis | undefined;
+                    "font-synthesis-position"?: import("csstype").Property.FontSynthesisPosition | undefined;
+                    "font-synthesis-small-caps"?: import("csstype").Property.FontSynthesisSmallCaps | undefined;
+                    "font-synthesis-style"?: import("csstype").Property.FontSynthesisStyle | undefined;
+                    "font-synthesis-weight"?: import("csstype").Property.FontSynthesisWeight | undefined;
                     "font-variant"?: import("csstype").Property.FontVariant | undefined;
                     "font-variant-alternates"?: import("csstype").Property.FontVariantAlternates | undefined;
                     "font-variant-caps"?: import("csstype").Property.FontVariantCaps | undefined;
@@ -1036,6 +1067,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
                     "mask-repeat"?: import("csstype").Property.MaskRepeat | undefined;
                     "mask-size"?: import("csstype").Property.MaskSize<string | number> | undefined;
                     "mask-type"?: import("csstype").Property.MaskType | undefined;
+                    "masonry-auto-flow"?: import("csstype").Property.MasonryAutoFlow | undefined;
                     "math-depth"?: import("csstype").Property.MathDepth | undefined;
                     "math-shift"?: import("csstype").Property.MathShift | undefined;
                     "math-style"?: import("csstype").Property.MathStyle | undefined;
@@ -1151,10 +1183,13 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
                     "text-transform"?: import("csstype").Property.TextTransform | undefined;
                     "text-underline-offset"?: import("csstype").Property.TextUnderlineOffset<string | number> | undefined;
                     "text-underline-position"?: import("csstype").Property.TextUnderlinePosition | undefined;
+                    "text-wrap"?: import("csstype").Property.TextWrap | undefined;
+                    "timeline-scope"?: import("csstype").Property.TimelineScope | undefined;
                     "touch-action"?: import("csstype").Property.TouchAction | undefined;
                     "transform-box"?: import("csstype").Property.TransformBox | undefined;
                     "transform-origin"?: import("csstype").Property.TransformOrigin<string | number> | undefined;
                     "transform-style"?: import("csstype").Property.TransformStyle | undefined;
+                    "transition-behavior"?: import("csstype").Property.TransitionBehavior | undefined;
                     "transition-delay"?: import("csstype").Property.TransitionDelay<string & {}> | undefined;
                     "transition-duration"?: import("csstype").Property.TransitionDuration<string & {}> | undefined;
                     "transition-property"?: import("csstype").Property.TransitionProperty | undefined;
@@ -1162,14 +1197,20 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
                     "unicode-bidi"?: import("csstype").Property.UnicodeBidi | undefined;
                     "user-select"?: import("csstype").Property.UserSelect | undefined;
                     "vertical-align"?: import("csstype").Property.VerticalAlign<string | number> | undefined;
+                    "view-timeline-axis"?: import("csstype").Property.ViewTimelineAxis | undefined;
+                    "view-timeline-inset"?: import("csstype").Property.ViewTimelineInset<string | number> | undefined;
+                    "view-timeline-name"?: import("csstype").Property.ViewTimelineName | undefined;
                     "view-transition-name"?: import("csstype").Property.ViewTransitionName | undefined;
                     "white-space"?: import("csstype").Property.WhiteSpace | undefined;
+                    "white-space-collapse"?: import("csstype").Property.WhiteSpaceCollapse | undefined;
+                    "white-space-trim"?: import("csstype").Property.WhiteSpaceTrim | undefined;
                     "will-change"?: import("csstype").Property.WillChange | undefined;
                     "word-break"?: import("csstype").Property.WordBreak | undefined;
                     "word-spacing"?: import("csstype").Property.WordSpacing<string | number> | undefined;
                     "word-wrap"?: import("csstype").Property.WordWrap | undefined;
                     "writing-mode"?: import("csstype").Property.WritingMode | undefined;
                     "z-index"?: import("csstype").Property.ZIndex | undefined;
+                    "animation-range"?: import("csstype").Property.AnimationRange<string | number> | undefined;
                     "background-position"?: import("csstype").Property.BackgroundPosition<string | number> | undefined;
                     "border-block"?: import("csstype").Property.BorderBlock<string | number> | undefined;
                     "border-block-end"?: import("csstype").Property.BorderBlockEnd<string | number> | undefined;
@@ -1216,6 +1257,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
                     "scroll-timeline"?: import("csstype").Property.ScrollTimeline | undefined;
                     "text-decoration"?: import("csstype").Property.TextDecoration<string | number> | undefined;
                     "text-emphasis"?: import("csstype").Property.TextEmphasis | undefined;
+                    "view-timeline"?: import("csstype").Property.ViewTimeline | undefined;
                     "-moz-animation-delay"?: import("csstype").Property.AnimationDelay<string & {}> | undefined;
                     "-moz-animation-direction"?: import("csstype").Property.AnimationDirection | undefined;
                     "-moz-animation-duration"?: import("csstype").Property.AnimationDuration<string & {}> | undefined;
@@ -1225,7 +1267,6 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
                     "-moz-animation-play-state"?: import("csstype").Property.AnimationPlayState | undefined;
                     "-moz-animation-timing-function"?: import("csstype").Property.AnimationTimingFunction | undefined;
                     "-moz-appearance"?: import("csstype").Property.MozAppearance | undefined;
-                    "-moz-backface-visibility"?: import("csstype").Property.BackfaceVisibility | undefined;
                     "-moz-binding"?: import("csstype").Property.MozBinding | undefined;
                     "-moz-border-bottom-colors"?: import("csstype").Property.MozBorderBottomColors | undefined;
                     "-moz-border-end-color"?: import("csstype").Property.BorderInlineEndColor | undefined;
@@ -1252,20 +1293,16 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
                     "-moz-margin-start"?: import("csstype").Property.MarginInlineStart<string | number> | undefined;
                     "-moz-orient"?: import("csstype").Property.MozOrient | undefined;
                     "-moz-osx-font-smoothing"?: import("csstype").Property.FontSmooth<string | number> | undefined;
+                    "-moz-outline-radius-bottomleft"?: import("csstype").Property.MozOutlineRadiusBottomleft<string | number> | undefined;
+                    "-moz-outline-radius-bottomright"?: import("csstype").Property.MozOutlineRadiusBottomright<string | number> | undefined;
+                    "-moz-outline-radius-topleft"?: import("csstype").Property.MozOutlineRadiusTopleft<string | number> | undefined;
+                    "-moz-outline-radius-topright"?: import("csstype").Property.MozOutlineRadiusTopright<string | number> | undefined;
                     "-moz-padding-end"?: import("csstype").Property.PaddingInlineEnd<string | number> | undefined;
                     "-moz-padding-start"?: import("csstype").Property.PaddingInlineStart<string | number> | undefined;
-                    "-moz-perspective"?: import("csstype").Property.Perspective<string | number> | undefined;
-                    "-moz-perspective-origin"?: import("csstype").Property.PerspectiveOrigin<string | number> | undefined;
                     "-moz-stack-sizing"?: import("csstype").Property.MozStackSizing | undefined;
                     "-moz-tab-size"?: import("csstype").Property.TabSize<string | number> | undefined;
                     "-moz-text-blink"?: import("csstype").Property.MozTextBlink | undefined;
                     "-moz-text-size-adjust"?: import("csstype").Property.TextSizeAdjust | undefined;
-                    "-moz-transform-origin"?: import("csstype").Property.TransformOrigin<string | number> | undefined;
-                    "-moz-transform-style"?: import("csstype").Property.TransformStyle | undefined;
-                    "-moz-transition-delay"?: import("csstype").Property.TransitionDelay<string & {}> | undefined;
-                    "-moz-transition-duration"?: import("csstype").Property.TransitionDuration<string & {}> | undefined;
-                    "-moz-transition-property"?: import("csstype").Property.TransitionProperty | undefined;
-                    "-moz-transition-timing-function"?: import("csstype").Property.TransitionTimingFunction | undefined;
                     "-moz-user-focus"?: import("csstype").Property.MozUserFocus | undefined;
                     "-moz-user-modify"?: import("csstype").Property.MozUserModify | undefined;
                     "-moz-user-select"?: import("csstype").Property.UserSelect | undefined;
@@ -1445,7 +1482,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
                     "-moz-border-image"?: import("csstype").Property.BorderImage | undefined;
                     "-moz-column-rule"?: import("csstype").Property.ColumnRule<string | number> | undefined;
                     "-moz-columns"?: import("csstype").Property.Columns<string | number> | undefined;
-                    "-moz-transition"?: import("csstype").Property.Transition<string & {}> | undefined;
+                    "-moz-outline-radius"?: import("csstype").Property.MozOutlineRadius<string | number> | undefined;
                     "-ms-content-zoom-limit"?: import("csstype").Property.MsContentZoomLimit | undefined;
                     "-ms-content-zoom-snap"?: import("csstype").Property.MsContentZoomSnap | undefined;
                     "-ms-flex"?: import("csstype").Property.Flex<string | number> | undefined;
@@ -1501,6 +1538,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
                     "-khtml-line-break"?: import("csstype").Property.LineBreak | undefined;
                     "-khtml-opacity"?: import("csstype").Property.Opacity | undefined;
                     "-khtml-user-select"?: import("csstype").Property.UserSelect | undefined;
+                    "-moz-backface-visibility"?: import("csstype").Property.BackfaceVisibility | undefined;
                     "-moz-background-clip"?: import("csstype").Property.BackgroundClip | undefined;
                     "-moz-background-inline-policy"?: import("csstype").Property.BoxDecorationBreak | undefined;
                     "-moz-background-origin"?: import("csstype").Property.BackgroundOrigin | undefined;
@@ -1522,17 +1560,22 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
                     "-moz-opacity"?: import("csstype").Property.Opacity | undefined;
                     "-moz-outline"?: import("csstype").Property.Outline<string | number> | undefined;
                     "-moz-outline-color"?: import("csstype").Property.OutlineColor | undefined;
-                    "-moz-outline-radius"?: import("csstype").Property.MozOutlineRadius<string | number> | undefined;
-                    "-moz-outline-radius-bottomleft"?: import("csstype").Property.MozOutlineRadiusBottomleft<string | number> | undefined;
-                    "-moz-outline-radius-bottomright"?: import("csstype").Property.MozOutlineRadiusBottomright<string | number> | undefined;
-                    "-moz-outline-radius-topleft"?: import("csstype").Property.MozOutlineRadiusTopleft<string | number> | undefined;
-                    "-moz-outline-radius-topright"?: import("csstype").Property.MozOutlineRadiusTopright<string | number> | undefined;
                     "-moz-outline-style"?: import("csstype").Property.OutlineStyle | undefined;
                     "-moz-outline-width"?: import("csstype").Property.OutlineWidth<string | number> | undefined;
+                    "-moz-perspective"?: import("csstype").Property.Perspective<string | number> | undefined;
+                    "-moz-perspective-origin"?: import("csstype").Property.PerspectiveOrigin<string | number> | undefined;
                     "-moz-text-align-last"?: import("csstype").Property.TextAlignLast | undefined;
                     "-moz-text-decoration-color"?: import("csstype").Property.TextDecorationColor | undefined;
                     "-moz-text-decoration-line"?: import("csstype").Property.TextDecorationLine | undefined;
                     "-moz-text-decoration-style"?: import("csstype").Property.TextDecorationStyle | undefined;
+                    "-moz-transform"?: import("csstype").Property.Transform | undefined;
+                    "-moz-transform-origin"?: import("csstype").Property.TransformOrigin<string | number> | undefined;
+                    "-moz-transform-style"?: import("csstype").Property.TransformStyle | undefined;
+                    "-moz-transition"?: import("csstype").Property.Transition<string & {}> | undefined;
+                    "-moz-transition-delay"?: import("csstype").Property.TransitionDelay<string & {}> | undefined;
+                    "-moz-transition-duration"?: import("csstype").Property.TransitionDuration<string & {}> | undefined;
+                    "-moz-transition-property"?: import("csstype").Property.TransitionProperty | undefined;
+                    "-moz-transition-timing-function"?: import("csstype").Property.TransitionTimingFunction | undefined;
                     "-moz-user-input"?: import("csstype").Property.MozUserInput | undefined;
                     "-ms-ime-mode"?: import("csstype").Property.ImeMode | undefined;
                     "-o-animation"?: import("csstype").Property.Animation<string & {}> | undefined;
@@ -1565,8 +1608,6 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
                     "-webkit-box-ordinal-group"?: import("csstype").Property.BoxOrdinalGroup | undefined;
                     "-webkit-box-orient"?: import("csstype").Property.BoxOrient | undefined;
                     "-webkit-box-pack"?: import("csstype").Property.BoxPack | undefined;
-                    "-webkit-scroll-snap-points-x"?: import("csstype").Property.ScrollSnapPointsX | undefined;
-                    "-webkit-scroll-snap-points-y"?: import("csstype").Property.ScrollSnapPointsY | undefined;
                     "alignment-baseline"?: import("csstype").Property.AlignmentBaseline | undefined;
                     "baseline-shift"?: import("csstype").Property.BaselineShift<string | number> | undefined;
                     "clip-rule"?: import("csstype").Property.ClipRule | undefined;
