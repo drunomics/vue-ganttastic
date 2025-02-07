@@ -1,44 +1,52 @@
 <template>
-  <div class="g-gantt-legend-collapse">
-    <component
-      :is="iconComponent"
-      name="chevron-right"
-      class="g-gantt-legend-do-uncollapse"
-      size="24"
-      @click="() => $emit('update:isCollapsed', !isCollapsed)"
-    />
-  </div>
+  <div class="g-gantt-legend">
+    <div class="g-gantt-legend-collapse">
+      <component
+        :is="iconComponent"
+        name="chevron-left"
+        class="g-gantt-legend-do-uncollapse"
+        size="24"
+        @click="() => $emit('update:isCollapsed', !isCollapsed)"
+      />
+    </div>
 
-  <div class="g-gantt-legend-areas-list">
-    <div
-      v-for="([areaName, promotions], index) in Object.entries(legend)"
-      :key="areaName"
-      class="g-gantt-legend-area-list"
-      :style="{
-        height: areaHeights[index] + areaDividerHeight + 'px'
-      }"
-    >
-      <div class="g-gantt-legend-title">
-        <component :is="iconComponent" size="32" :name="legend[areaName][0].area.icon" />
-
-        <p class="g-gantt-legend-area">
-          {{ areaName }}
-        </p>
-      </div>
-
+    <div class="g-gantt-legend-areas-list">
       <div
-        v-for="promotion in promotions"
-        :key="promotion.category.name"
-        class="g-gantt-legend-promotion"
+        v-for="([areaName, promotions], index) in Object.entries(legend)"
+        :key="areaName"
+        class="g-gantt-legend-area-list"
+        :style="{
+          height: areaHeights[index] + areaDividerHeight + 'px'
+        }"
       >
-        <div
-          class="g-gantt-legend-category-color"
-          :style="{ backgroundColor: '#' + promotion.category.color }"
-        />
+        <div class="g-gantt-legend-title">
+          <component
+            :is="iconComponent"
+            size-s="24"
+            size-m="32"
+            size-l="32"
+            :name="legend[areaName][0].area.icon"
+          />
 
-        <p class="g-gantt-legend-category-name">
-          {{ promotion.category.name }}
-        </p>
+          <p class="g-gantt-legend-area">
+            {{ areaName }}
+          </p>
+        </div>
+
+        <div
+          v-for="promotion in promotions"
+          :key="promotion.category.name"
+          class="g-gantt-legend-promotion"
+        >
+          <div
+            class="g-gantt-legend-category-color"
+            :style="{ backgroundColor: '#' + promotion.category.color }"
+          />
+
+          <p class="g-gantt-legend-category-name">
+            {{ promotion.category.name }}
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -104,10 +112,11 @@ onMounted(() => {
   align-items: center;
   gap: 8px;
 }
-
+.g-gantt-legend-do-uncollapse {
+  color: #008075;
+}
 .g-gantt-legend-do-uncollapse:hover {
   cursor: pointer;
-  color: #008075;
 }
 
 .g-gantt-legend-area-list {
@@ -122,5 +131,15 @@ onMounted(() => {
   line-height: 18.2px;
 
   color: #1b1e1f;
+}
+
+.g-gantt-legend {
+  display: flex;
+  flex-direction: column;
+
+  background-color: white;
+  min-width: 255px;
+
+  box-shadow: 4px 0 8px 1px #1b1e1f33;
 }
 </style>

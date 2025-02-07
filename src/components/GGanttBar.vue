@@ -5,7 +5,7 @@
     :class="['g-gantt-bar', barConfig.asArrow ? 'g-gantt-bar-is-arrow' : '', barConfig.class || '']"
     :style="{
       ...barConfig.style,
-      position: 'relative',
+      position: 'absolute',
       top: `${rowHeight * 0.1}px`,
       left: `${xStart}px`,
       width: `${getBarWidth}px`,
@@ -27,13 +27,22 @@
         <div v-if="barConfig.html" v-html="barConfig.html" />
       </slot>
     </div>
-    <div
+    <component
+      :is="iconComponent"
+      size-s="16"
+      size-m="16"
+      class="g-gantt-bar-arrow"
+      size-l="16"
+      name="gant-arrow"
+      size="16"
+    />
+    <!--    <div
       v-if="barConfig.asArrow"
       :style="{
         borderLeft: `8px solid #${bar?.ganttBarConfig?.style?.backgroundColor}`
       }"
       class="g-gantt-bar-arrow"
-    />
+    />-->
     <template v-if="barConfig.hasHandles">
       <div class="g-gantt-bar-handle-left" />
       <div class="g-gantt-bar-handle-right" />
@@ -68,6 +77,7 @@ const ganttBarRef = ref()
 const { toDayjs } = useDayjsHelper()
 const isDragging = ref(false)
 
+const iconComponent = inject("iconComponent")
 const barConfig = computed(() => bar.value.ganttBarConfig)
 const barContainerEl = inject(BAR_CONTAINER_KEY)
 
@@ -94,7 +104,7 @@ const setCorrectArrowPosition = (placement: string) => {
 
     const xAxisVal = parseInt(matched[1])
 
-    tippyArrow.style.transform = `translate3d(${xAxisVal}px, -${tooltipHeight + 7}px, 0px)`
+    tippyArrow.style.transform = `translate3d(${xAxisVal}px, -${tooltipHeight + 6}px, 0px)`
   }
 
   if (placement === "top" && matched) {
@@ -177,7 +187,9 @@ const getBarWidth = computed(() => {
     return 0
   }
 
-  return xEnd.value - xStart.value - arrowWidth
+  const arrowWidth = 6
+
+  return xEnd.value - xStart.value - arrowWidth + arrowWidth
 })
 
 onMounted(() => {
@@ -265,16 +277,12 @@ onMounted(() => {
 
 .g-gantt-bar-arrow {
   position: absolute;
-  right: -6px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 0;
-  height: 0;
-  border-left: 8px solid v-bind(barColor);
-  border-top: 8px solid transparent;
-  border-bottom: 8px solid transparent;
-  z-index: 10;
-  border-top-left-radius: 2px;
-  border-bottom-left-radius: 2px;
+  width: 6.5px;
+  right: -5px;
+  bottom: -6px;
+}
+
+.g-gantt-bar-arrow > path {
+  fill: v-bind(barColor);
 }
 </style>

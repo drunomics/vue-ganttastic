@@ -1,18 +1,10 @@
 <template>
-  <div class="g-gantt-legend">
-    <g-gantt-legend-non-collapsed-view
-      v-if="!isCollapsed"
-      v-model:is-collapsed="isCollapsed"
-      :arrow-name="arrowName"
-      :legend="legend"
-    />
-    <g-gantt-legend-collapsed-view
-      v-else
-      v-model:is-collapsed="isCollapsed"
-      :arrow-name="arrowName"
-      :legend="legend"
-    />
-  </div>
+  <g-gantt-legend-non-collapsed-view
+    v-if="!isCollapsed"
+    v-model:is-collapsed="isCollapsed"
+    :legend="legend"
+  />
+  <g-gantt-legend-collapsed-view v-else v-model:is-collapsed="isCollapsed" :legend="legend" />
 </template>
 <script setup lang="ts">
 /// <reference lib="es2017.object" />
@@ -25,8 +17,9 @@ defineProps<{
 }>()
 
 const isCollapsed = ref(true)
-const arrowName = computed(() => (isCollapsed.value ? "chevron-right" : "chevron-left"))
-const legendWidth = computed(() => (isCollapsed.value ? "255px" : "56px"))
+const legendWidth = computed(() => {
+  isCollapsed.value ? "255px" : "56px"
+})
 
 const getLegendCollapseDefaultVal = () => {
   const body = document.querySelector("body")
@@ -40,7 +33,7 @@ onBeforeMount(() => {
   isCollapsed.value = getLegendCollapseDefaultVal()
 })
 </script>
-<style scoped>
+<style scoped lang="postcss">
 .g-gantt-legend {
   display: flex;
   flex-direction: column;
@@ -49,5 +42,10 @@ onBeforeMount(() => {
   min-width: v-bind(legendWidth);
 
   box-shadow: 4px 0 8px 1px #1b1e1f33;
+}
+
+@media (max-width: 700px) {
+  .g-gantt-legend {
+  }
 }
 </style>

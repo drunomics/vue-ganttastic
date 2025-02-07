@@ -1,37 +1,41 @@
 <template>
-  <div class="g-gantt-legend-collapse">
-    <component
-      :is="iconComponent"
-      name="chevron-left"
-      class="g-gantt-legend-do-collapse"
-      size="24"
-      @click="() => $emit('update:isCollapsed', !isCollapsed)"
-    />
-  </div>
-
-  <div class="g-gantt-legend-areas-list">
-    <div
-      v-for="([areaName, promotions], index) in Object.entries(legend)"
-      :key="areaName"
-      class="g-gantt-legend-area-list"
-      :style="{
-        height: areaHeights[index] + areaDividerHeight + 'px'
-      }"
-    >
+  <div class="g-gantt-legend">
+    <div class="g-gantt-legend-collapse">
       <component
         :is="iconComponent"
-        class="g-gantt-legend-area-icon"
+        name="chevron-right"
+        class="g-gantt-legend-do-collapse"
         size="24"
-        :name="legend[areaName][0].area.icon"
+        @click="() => $emit('update:isCollapsed', !isCollapsed)"
       />
+    </div>
 
-      <div class="g-gantt-legend-promotion">
-        <div
-          v-for="promotion in promotions"
-          :key="promotion.category.name"
-          class="g-gantt-legend-category-color"
-          :style="{ backgroundColor: '#' + promotion.category.color }"
+    <div class="g-gantt-legend-areas-list">
+      <div
+        v-for="([areaName, promotions], index) in Object.entries(legend)"
+        :key="areaName"
+        class="g-gantt-legend-area-list"
+        :style="{
+          height: areaHeights[index] + areaDividerHeight + 'px'
+        }"
+      >
+        <component
+          :is="iconComponent"
+          class="g-gantt-legend-area-icon"
+          size-s="24"
+          size-m="32"
+          size-l="32"
+          :name="legend[areaName][0].area.icon"
         />
+
+        <div class="g-gantt-legend-promotion">
+          <div
+            v-for="promotion in promotions"
+            :key="promotion.category.name"
+            class="g-gantt-legend-category-color"
+            :style="{ backgroundColor: '#' + promotion.category.color }"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -90,9 +94,12 @@ onMounted(() => {
   gap: 6px;
 }
 
+.g-gantt-legend-do-collapse {
+  color: #008075;
+}
+
 .g-gantt-legend-do-collapse:hover {
   cursor: pointer;
-  color: #008075;
 }
 
 .g-gantt-legend-category-color {
@@ -101,5 +108,21 @@ onMounted(() => {
 
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
+}
+
+.g-gantt-legend {
+  display: flex;
+  flex-direction: column;
+
+  background-color: white;
+  min-width: 60px;
+
+  box-shadow: 4px 0 8px 1px #1b1e1f33;
+}
+
+@media (max-width: 700px) {
+  .g-gantt-legend {
+    min-width: 52px;
+  }
 }
 </style>

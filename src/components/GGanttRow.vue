@@ -21,7 +21,7 @@
         </slot>
       </div>
       <div ref="barContainer" class="g-gantt-row-bars-container" v-bind="$attrs">
-        <transition-group name="bar-transition sys" tag="div">
+        <transition-group name="bar-transition sys" tag="div" class="transition-group">
           <g-gantt-bar v-for="bar in barsList" :key="bar.ganttBarConfig.id" :bar="bar">
             <slot :bar="bar" name="bar-label" />
           </g-gantt-bar>
@@ -32,7 +32,16 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, toRefs, computed, type StyleValue, provide, onMounted, useTemplateRef } from "vue"
+import {
+  ref,
+  toRefs,
+  computed,
+  type StyleValue,
+  provide,
+  onMounted,
+  useTemplateRef,
+  type ShallowRef
+} from "vue"
 
 import dayjs from "dayjs"
 import useTimePositionMapping from "../composables/useTimePositionMapping.js"
@@ -162,6 +171,10 @@ const isBlank = (str: string) => {
   background: #f2f2f2;
   z-index: 3;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.6);
+}
+
+.transition-group {
+  position: relative;
 }
 
 .bar-transition-leave-active,
