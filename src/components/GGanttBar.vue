@@ -36,13 +36,6 @@
       name="gant-arrow"
       size="16"
     />
-    <!--    <div
-      v-if="barConfig.asArrow"
-      :style="{
-        borderLeft: `8px solid #${bar?.ganttBarConfig?.style?.backgroundColor}`
-      }"
-      class="g-gantt-bar-arrow"
-    />-->
     <template v-if="barConfig.hasHandles">
       <div class="g-gantt-bar-handle-left" />
       <div class="g-gantt-bar-handle-right" />
