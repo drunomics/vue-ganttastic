@@ -21,7 +21,7 @@
         </slot>
       </div>
       <div ref="barContainer" class="g-gantt-row-bars-container" v-bind="$attrs">
-        <transition-group name="bar-transition sys" tag="div">
+        <transition-group name="bar-transition sys" tag="div" class="transition-group">
           <g-gantt-bar v-for="bar in barsList" :key="bar.ganttBarConfig.id" :bar="bar">
             <slot :bar="bar" name="bar-label" />
           </g-gantt-bar>
@@ -32,7 +32,16 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, toRefs, computed, type StyleValue, provide, onMounted, useTemplateRef } from "vue"
+import {
+  ref,
+  toRefs,
+  computed,
+  type StyleValue,
+  provide,
+  onMounted,
+  useTemplateRef,
+  type ShallowRef
+} from "vue"
 
 import dayjs from "dayjs"
 import useTimePositionMapping from "../composables/useTimePositionMapping.js"
@@ -79,8 +88,18 @@ const onDrop = (e: MouseEvent) => {
   emit("drop", { e, datetime })
 }
 
+function areDatesWithin3Days(start1: Date, end1: Date, start2: Date, end2: Date) {
+  const msPerDay = 1000 * 60 * 60 * 24
+
+  // Check if ranges overlap or are within 3 days apart
+  const gap =
+    Math.max(start2.valueOf() - end1.valueOf(), start1.valueOf() - end2.valueOf()) / msPerDay
+
+  return gap < 3
+}
+
 function doIntervalsOverlap(start1: Date, end1: Date, start2: Date, end2: Date) {
-  return start1 <= end2 && start2 <= end1
+  return (start1 <= end2 && start2 <= end1) || areDatesWithin3Days(start1, end1, start2, end2)
 }
 
 function findOverlappingIntervals(bars: GanttBarObject[]) {
@@ -162,6 +181,10 @@ const isBlank = (str: string) => {
   background: #f2f2f2;
   z-index: 3;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.6);
+}
+
+.transition-group {
+  position: relative;
 }
 
 .bar-transition-leave-active,
