@@ -88,8 +88,18 @@ const onDrop = (e: MouseEvent) => {
   emit("drop", { e, datetime })
 }
 
+function areDatesWithin3Days(start1: Date, end1: Date, start2: Date, end2: Date) {
+  const msPerDay = 1000 * 60 * 60 * 24
+
+  // Check if ranges overlap or are within 3 days apart
+  const gap =
+    Math.max(start2.valueOf() - end1.valueOf(), start1.valueOf() - end2.valueOf()) / msPerDay
+
+  return gap < 3
+}
+
 function doIntervalsOverlap(start1: Date, end1: Date, start2: Date, end2: Date) {
-  return start1 <= end2 && start2 <= end1
+  return (start1 <= end2 && start2 <= end1) || areDatesWithin3Days(start1, end1, start2, end2)
 }
 
 function findOverlappingIntervals(bars: GanttBarObject[]) {
