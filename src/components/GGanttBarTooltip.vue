@@ -49,7 +49,7 @@
           :is="iconComponent"
           v-if="tooltipIsClickable"
           name="chevron-right"
-          size="16"
+          size-s="16"
           :style="{ color: '#008075' }"
         />
       </div>
