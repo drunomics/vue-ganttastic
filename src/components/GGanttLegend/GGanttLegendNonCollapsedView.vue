@@ -93,7 +93,7 @@ onMounted(() => {
   margin: 0 8px 0 24px;
 }
 
-.g-gantt-legend-area-icon > path {
+.g-gantt-legend-area-icon > * {
   fill: #4c5356;
 }
 

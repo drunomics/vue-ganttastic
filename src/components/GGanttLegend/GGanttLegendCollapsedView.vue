@@ -23,6 +23,7 @@
         <div class="g-gantt-legend-title">
           <component
             :is="iconComponent"
+            class="g-gantt-legend-area-icon"
             size-s="24"
             size-m="24"
             size-l="32"
@@ -157,6 +158,10 @@ onMounted(() => {
   box-shadow: 4px 0 8px 1px #1b1e1f33;
 
   z-index: 1;
+}
+
+.g-gantt-legend-area-icon * {
+  fill: #4c5356;
 }
 
 @media (max-width: 1400px) {
