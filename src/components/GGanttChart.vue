@@ -292,14 +292,9 @@ provide(EMIT_BAR_EVENT_KEY, emitBarEvent)
   font-variant-numeric: tabular-nums;
 }
 
-.g-gantt-chart-overview {
-  width: 50px;
-  height: 100%;
-}
-
 .g-gantt-chart-wrapper {
   width: 100%;
-  padding-left: 16px;
+  padding: 0 24px 0 16px;
   overflow-x: scroll;
 }
 
@@ -307,7 +302,6 @@ provide(EMIT_BAR_EVENT_KEY, emitBarEvent)
   width: 100%;
   display: flex;
   background: #f0f1f2;
-  padding: 0 24px 0 0;
   border-top: 4px solid #91979c;
   border-bottom: 4px solid #91979c;
 }
@@ -341,8 +335,8 @@ provide(EMIT_BAR_EVENT_KEY, emitBarEvent)
 }
 
 .with-column {
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
@@ -365,5 +359,11 @@ provide(EMIT_BAR_EVENT_KEY, emitBarEvent)
 .labels-in-column {
   display: flex;
   flex-direction: row;
+}
+
+@media (max-width: 700px) {
+  .g-gantt-chart-wrapper {
+    padding-right: 16px;
+  }
 }
 </style>

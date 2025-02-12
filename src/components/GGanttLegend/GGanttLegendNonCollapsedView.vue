@@ -1,13 +1,14 @@
 <template>
   <div class="g-gantt-legend">
-    <div class="g-gantt-legend-collapse">
-      <component
-        :is="iconComponent"
-        name="chevron-right"
-        class="g-gantt-legend-do-collapse"
-        size="24"
-        @click="() => $emit('update:isCollapsed', !isCollapsed)"
-      />
+    <div class="g-gantt-legend-collapse-container">
+      <div class="g-gantt-legend-collapse" @click="() => $emit('update:isCollapsed', !isCollapsed)">
+        <component
+          :is="iconComponent"
+          name="chevron-right"
+          class="g-gantt-legend-do-collapse"
+          size="24"
+        />
+      </div>
     </div>
 
     <div class="g-gantt-legend-areas-list">
@@ -23,7 +24,7 @@
           :is="iconComponent"
           class="g-gantt-legend-area-icon"
           size-s="24"
-          size-m="32"
+          size-m="24"
           size-l="32"
           :name="legend[areaName][0].area.icon"
         />
@@ -64,17 +65,36 @@ onMounted(() => {
 })
 </script>
 <style scoped>
-.g-gantt-legend-collapse {
+.g-gantt-legend-collapse-container {
   display: flex;
   align-items: center;
+  align-self: flex-end;
   justify-content: flex-end;
 
-  height: 48px;
+  height: 62px;
   margin-bottom: 14px;
 }
 
+.g-gantt-legend-collapse {
+  display: flex;
+  align-items: center;
+  align-self: baseline;
+  justify-content: flex-end;
+
+  width: 48px;
+  height: 48px;
+}
+
+.g-gantt-legend-collapse:hover {
+  cursor: pointer;
+}
+
 .g-gantt-legend-area-icon {
-  margin: 0 8px 0 16px;
+  margin: 0 8px 0 24px;
+}
+
+.g-gantt-legend-area-icon > path {
+  fill: #4c5356;
 }
 
 .g-gantt-legend-promotion {
@@ -98,12 +118,8 @@ onMounted(() => {
   color: #008075;
 }
 
-.g-gantt-legend-do-collapse:hover {
-  cursor: pointer;
-}
-
 .g-gantt-legend-category-color {
-  width: 44px;
+  width: 60px;
   height: 6px;
 
   border-top-right-radius: 4px;
@@ -115,14 +131,38 @@ onMounted(() => {
   flex-direction: column;
 
   background-color: white;
-  min-width: 60px;
+  min-width: 68px;
 
   box-shadow: 4px 0 8px 1px #1b1e1f33;
+  z-index: 1;
+}
+
+@media (max-width: 1400px) {
+  .g-gantt-legend {
+    min-width: 60px;
+  }
+
+  .g-gantt-legend-category-color {
+    max-width: 52px;
+  }
+
+  .g-gantt-legend-collapse {
+    width: 56px;
+    height: 48px;
+  }
 }
 
 @media (max-width: 700px) {
   .g-gantt-legend {
-    min-width: 52px;
+    min-width: 56px;
+  }
+
+  .g-gantt-legend-category-color {
+    max-width: 44px;
+  }
+
+  .g-gantt-legend-area-icon {
+    margin-left: 16px;
   }
 }
 </style>
