@@ -150,8 +150,17 @@ const getBarsToRender = () => {
   return barsList
 }
 
+function sortBarsByBeginDate(bars: GanttBarObject[][]) {
+  return bars.sort((a, b) => {
+    const minDateA = Math.min(...a.map((obj: GanttBarObject) => obj.myBeginDate.getTime()))
+    const minDateB = Math.min(...b.map((obj: GanttBarObject) => obj.myBeginDate.getTime()))
+
+    return minDateA - minDateB
+  })
+}
+
 onMounted(() => {
-  barsToRender.value = getBarsToRender()
+  barsToRender.value = sortBarsByBeginDate(getBarsToRender())
 })
 const isBlank = (str: string) => {
   return !str || /^\s*$/.test(str)
