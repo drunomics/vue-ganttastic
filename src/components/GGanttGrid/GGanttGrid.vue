@@ -24,7 +24,13 @@ onMounted(() => {
   nextTick(() => {
     const areasList = Object.values(document.querySelector(".g-gantt-rows-list")!.children)
 
-    areasList.forEach((area) => {
+    areasList.forEach((area, index) => {
+      if (index > 0) {
+        areaHeights.value.push(area.clientHeight + areaHeights.value[index - 1])
+
+        return
+      }
+
       areaHeights.value.push(area.clientHeight)
     })
 
