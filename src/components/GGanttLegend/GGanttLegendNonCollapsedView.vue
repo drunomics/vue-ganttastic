@@ -72,7 +72,6 @@ onMounted(() => {
   justify-content: flex-end;
 
   height: 62px;
-  margin-bottom: 14px;
 }
 
 .g-gantt-legend-collapse {
