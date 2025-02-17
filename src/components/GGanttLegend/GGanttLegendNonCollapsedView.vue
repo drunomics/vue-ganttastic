@@ -17,7 +17,7 @@
         :key="areaName"
         class="g-gantt-legend-area-list"
         :style="{
-          height: areaHeights[index] + areaDividerHeight + 'px'
+          height: areaHeights[index] + 'px'
         }"
       >
         <component
@@ -110,7 +110,8 @@ onMounted(() => {
 .g-gantt-legend-area-list {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+
+  padding: 6px 0;
 }
 
 .g-gantt-legend-do-collapse {
