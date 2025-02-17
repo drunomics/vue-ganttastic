@@ -17,7 +17,7 @@
         :key="areaName"
         class="g-gantt-legend-area-list"
         :style="{
-          height: areaHeights[index] + areaDividerHeight + 'px'
+          height: areaHeights[index] + 'px'
         }"
       >
         <div class="g-gantt-legend-title">
@@ -139,6 +139,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  padding: 6px 0;
 }
 
 .g-gantt-legend-category-name {
