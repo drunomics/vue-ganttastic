@@ -31,7 +31,7 @@
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "@rushstack/eslint-patch": "^1.2.0",
     "@senojs/rollup-plugin-style-inject": "^0.1.1",
-    "@types/node": "latest",
+    "@types/node": "^22.13.5",
     "@types/postcss-preset-env": "^7.7.0",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/eslint-config-typescript": "^11.0.2",
