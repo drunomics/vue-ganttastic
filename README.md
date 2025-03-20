@@ -1,3 +1,5 @@
+This is a fork of https://github.com/zunnzunn/vue-ganttastic
+
 # Vue Ganttastic
 
 <div style="display: flex; flex-direction: column; align-items:center;">
